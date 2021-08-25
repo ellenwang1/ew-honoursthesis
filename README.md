@@ -1,4 +1,4 @@
-Name: Ellen Wang
-Email: z5209394@student.unsw.edu
-Trello:
+Name: Ellen Wang <br />
+Email: z5209394@student.unsw.edu <br />
+Trello: <br />
 Overleaf:
