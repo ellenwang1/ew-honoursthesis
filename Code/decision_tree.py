@@ -1,6 +1,9 @@
 #https://medium.com/@penggongting/implementing-decision-tree-from-scratch-in-python-c732e7c69aea
 #decision tree
 
+#url not used: https://medium.com/@penggongting/implementing-decision-tree-from-scratch-in-python-c732e7c69aea
+#using classes to write a decision tree
+
 def entropy_func(c, n):
     """
     The math formula
