@@ -1,3 +1,6 @@
+import numpy as np
+import matplotlib.pyplot as plt
+
 def tree_plots(error_list):
     index = np.arange(0,9)
     no_trees = [50, 100, 200, 300, 500, 1000, 2000, 5000, 10000]

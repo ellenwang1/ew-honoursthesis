@@ -1,3 +1,7 @@
+import nibabel as nib
+import os
+import re
+
 def probability_tissue_maps(tissue_maps):
     CSF = []
     WM = []
@@ -33,7 +37,7 @@ def probability_tissue_maps(tissue_maps):
                 GM.append(Data_list)
     return CSF, WM, GM
 
-def read_data(T1_Scan, FLAIR_scan, T1_Lacunes_Correct, T1_Soft_Tissue):
+def read_data(T1_scan, FLAIR_scan, T1_Lacunes_Correct, T1_Soft_Tissue):
     #Read all data into list
     T1_scan_data = []
     for file in os.listdir(T1_scan):

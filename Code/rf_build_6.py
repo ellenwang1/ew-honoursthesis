@@ -1,3 +1,5 @@
+from sklearn.metrics import accuracy_score
+
 def best_number_of_trees(dataset, Y_train):
     accuracy_list = []
     error_list = []
