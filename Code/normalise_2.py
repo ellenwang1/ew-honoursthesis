@@ -1,3 +1,7 @@
+import os
+import nibabel as nib
+import numpy as np
+
 def normalise(mypath_og):
     for root, dirs, files in os.walk(mypath_og, topdown=False):
         for file in files:
