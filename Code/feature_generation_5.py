@@ -1,3 +1,7 @@
+import numpy as np
+from numpy import linalg as LA
+import cv2
+
 def feature_gen_train(filterSize, kernel, X_train):
     min_T1 = []
     med_T1 = []
@@ -662,7 +666,6 @@ def feature_gen_test(filterSize, kernel, X_test):
         mid_small_ratio_T1_inc_test.append(np.mean(X_test[index][4][8:12, 8:12, 8:12])/((sum(sum(sum(X_test[index][4][7:13, 7:13, 7:13]))))/216))
         mid_med_ratio_T1_inc_test.append(np.mean(X_test[index][4][7:13, 7:13, 7:13])/((sum(sum(sum(X_test[index][4][6:14, 6:14, 6:14]))))/512))
         mid_large_ratio_T1_inc_test.append(np.mean(X_test[index][4][6:14, 6:14, 6:14])/((sum(sum(sum(X_test[index][4][3:17, 3:17, 3:17]))))/2744))
-        mean_T1.append(np.mean(X_test[index][4]))
         mean_T1_test.append(np.mean(X_test[index][4]))
         max_T1_test.append(np.max(X_test[index][4]))
         var_T1_test.append(np.var(X_test[index][4]))
@@ -683,7 +686,6 @@ def feature_gen_test(filterSize, kernel, X_test):
         mid_small_ratio_FLAIR_inc_test.append(np.mean(X_test[index][5][8:12, 8:12, 8:12])/((sum(sum(sum(X_test[index][5][7:13, 7:13, 7:13]))))/216))
         mid_med_ratio_FLAIR_inc_test.append(np.mean(X_test[index][5][7:13, 7:13, 7:13])/((sum(sum(sum(X_test[index][5][6:14, 6:14, 6:14]))))/512))
         mid_large_ratio_FLAIR_inc_test.append(np.mean(X_test[index][5][6:14, 6:14, 6:14])/((sum(sum(sum(X_test[index][5][3:17, 3:17, 3:17]))))/2744))
-        mean_FLAIR.append(np.mean(X_test[index][5]))
         mean_FLAIR_test.append(np.mean(X_test[index][5]))
         max_FLAIR_test.append(np.max(X_test[index][5]))
         var_FLAIR_test.append(np.var(X_test[index][5]))

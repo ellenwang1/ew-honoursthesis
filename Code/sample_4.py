@@ -1,4 +1,9 @@
-def sample_lacunes(T1_Soft_Tissue_Binary_Mask, T1_scan_data, FLAIR_scan_data, Lacune_indicator_data, Soft_tiss_data):
+import nibabel as nib
+import re
+import os
+import numpy as np
+
+def sample_lacunes(CSF, GM, WM, T1_Soft_Tissue_Binary_Mask, T1_scan_data, FLAIR_scan_data, Lacune_indicator_data, Soft_tiss_data):
     # Lacune not as centred, random sampling all around brain
     X_train_3D_lacune = []
     Y_train_3D_lacune = []
@@ -249,7 +254,7 @@ def sample_lacunes(T1_Soft_Tissue_Binary_Mask, T1_scan_data, FLAIR_scan_data, La
             print(brain_image)
     return X_train_3D_lacune, Y_train_3D_lacune, Y_train_segment_3D_lacune, X_train_3D_nlacune, Y_train_3D_nlacune, Y_train_segment_3D_nlacune
 
-def non_lacune_sampling(T1_Soft_Tissue_Binary_Mask, T1_scan_data, FLAIR_scan_data, Lacune_indicator_data, Soft_tiss_data):
+def non_lacune_sampling(CSF, GM, WM, T1_Soft_Tissue_Binary_Mask, T1_scan_data, FLAIR_scan_data, Lacune_indicator_data, Soft_tiss_data):
     # Lacune not as centred, random sampling all around brain
     X_train_3D_nlacune_func2 = []
     Y_train_3D_nlacune_func2 = []
@@ -323,7 +328,7 @@ def non_lacune_sampling(T1_Soft_Tissue_Binary_Mask, T1_scan_data, FLAIR_scan_dat
 
     return X_train_3D_nlacune_func2, Y_train_3D_nlacune_func2, Y_train_segment_3D_nlacune_func2
 
-def test_sampling(T1_Soft_Tissue_Binary_Mask, T1_scan_data, FLAIR_scan_data, Lacune_indicator_data, Soft_tiss_data):
+def test_sampling(CSF, GM, WM, T1_Soft_Tissue_Binary_Mask, T1_scan_data, FLAIR_scan_data, Lacune_indicator_data, Soft_tiss_data):
     # Lacune not as centred, random sampling all around brain
     X_test_3D_nlacune = []
     Y_test_3D_nlacune = []
