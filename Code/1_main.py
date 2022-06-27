@@ -16,6 +16,7 @@ import math
 import random
 from numpy import linalg as LA
 
+
 from sklearn.metrics import accuracy_score
 from sklearn.model_selection import cross_validate
 from sklearn.metrics import make_scorer
@@ -25,6 +26,7 @@ from normalise_2 import normalise
 from import_data_3 import probability_tissue_maps, read_data
 from sample_4 import sample_lacunes, non_lacune_sampling, test_sampling, train_test_combine
 from feature_generation_5 import feature_gen_train, feature_gen_test
+
 
 # Setting paths for different folders
 FLAIR_scan = r'C:\Users\ellen\Documents\ew-honoursthesis\Data\forAudrey.tar\Normalised\FLAIRinT1space_withLacunes_35.tar'
@@ -122,3 +124,4 @@ rf_random.fit(dataset, Y_train)
 
 # View the best parameters from the random search
 rf_random.best_params_
+
