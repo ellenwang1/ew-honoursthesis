@@ -1,7 +1,5 @@
-from sklearn.metrics import accuracy_score
-from sklearn.metrics import make_scorer
-from sklearn.metrics import recall_score
-from sklearn.model_selection import RandomizedSearchCV
+from sklearn import metrics
+from sklearn import model_selection
 import cv2
 import pandas as pd
 import numpy as np
@@ -29,19 +27,30 @@ normalise(mypath_og)
 
 # Import normalised data into relevant variables
 CSF, WM, GM = probability_tissue_maps(tissue_maps)
-T1_scan_data, FLAIR_scan_data, Lacune_indicator_data, Soft_tiss_data = read_data(T1_scan, FLAIR_scan, T1_Lacunes_Correct, T1_Soft_Tissue)
+T1_scan_data, FLAIR_scan_data, Lacune_indicator_data, Soft_tiss_data \
+     = read_data(T1_scan, FLAIR_scan, T1_Lacunes_Correct, T1_Soft_Tissue)
 
 # Sample Train - Lacunes
-X_train_3D_lacune, Y_train_3D_lacune, Y_train_segment_3D_lacune, X_train_3D_nlacune, Y_train_3D_nlacune, Y_train_segment_3D_nlacune = sample_lacunes(CSF, GM, WM, T1_Soft_Tissue_Binary_Mask, T1_scan_data, FLAIR_scan_data, Lacune_indicator_data, Soft_tiss_data)
+X_train_3D_lacune, Y_train_3D_lacune, Y_train_segment_3D_lacune, X_train_3D_nlacune, \
+    Y_train_3D_nlacune, Y_train_segment_3D_nlacune = sample_lacunes(CSF, GM, WM, \
+    T1_Soft_Tissue_Binary_Mask, T1_scan_data, FLAIR_scan_data, Lacune_indicator_data, Soft_tiss_data)
 
 # Sample Train - Non-Lacunes
-X_train_3D_nlacune_func2, Y_train_3D_nlacune_func2, Y_train_segment_3D_nlacune_func2 = non_lacune_sampling(CSF, GM, WM, T1_Soft_Tissue_Binary_Mask, T1_scan_data, FLAIR_scan_data, Lacune_indicator_data, Soft_tiss_data)
+X_train_3D_nlacune_func2, Y_train_3D_nlacune_func2, Y_train_segment_3D_nlacune_func2 \
+    = non_lacune_sampling(CSF, GM, WM, T1_Soft_Tissue_Binary_Mask, T1_scan_data, \
+    FLAIR_scan_data, Lacune_indicator_data, Soft_tiss_data)
 
 # Sample Test
-X_test_3D_lacune, Y_test_3D_lacune, Y_test_segment_3D_lacune, X_test_3D_nlacune, Y_test_3D_nlacune, Y_test_segment_3D_nlacune = test_sampling(CSF, GM, WM, T1_Soft_Tissue_Binary_Mask, T1_scan_data, FLAIR_scan_data, Lacune_indicator_data, Soft_tiss_data)
+X_test_3D_lacune, Y_test_3D_lacune, Y_test_segment_3D_lacune, X_test_3D_nlacune, \
+    Y_test_3D_nlacune, Y_test_segment_3D_nlacune = test_sampling(CSF, GM, WM, \
+    T1_Soft_Tissue_Binary_Mask, T1_scan_data, FLAIR_scan_data, Lacune_indicator_data, Soft_tiss_data)
 
 # Combine Train Test Results
-X_train_3D_nlacune_all, Y_train_3D_nlacune_all, Y_train_segment_3D_nlacune_all, X_train, Y_train, Y_train_segment, Y_test_segment, Y_test, X_test = train_test_combine(X_train_3D_lacune, Y_train_3D_lacune, Y_train_segment_3D_lacune, X_train_3D_nlacune, Y_train_3D_nlacune, Y_train_segment_3D_nlacune, X_train_3D_nlacune_func2, Y_train_3D_nlacune_func2, Y_train_segment_3D_nlacune_func2, X_test_3D_lacune, Y_test_3D_lacune, Y_test_segment_3D_lacune, X_test_3D_nlacune, Y_test_3D_nlacune, Y_test_segment_3D_nlacune)
+X_train_3D_nlacune_all, Y_train_3D_nlacune_all, Y_train_segment_3D_nlacune_all, X_train, \
+    Y_train, Y_train_segment, Y_test_segment, Y_test, X_test = train_test_combine(X_train_3D_lacune, \
+    Y_train_3D_lacune, Y_train_segment_3D_lacune, X_train_3D_nlacune, Y_train_3D_nlacune, Y_train_segment_3D_nlacune, \
+    X_train_3D_nlacune_func2, Y_train_3D_nlacune_func2, Y_train_segment_3D_nlacune_func2, X_test_3D_lacune, \
+    Y_test_3D_lacune, Y_test_segment_3D_lacune, X_test_3D_nlacune, Y_test_3D_nlacune, Y_test_segment_3D_nlacune)
 
 # Generate Train Features
 filterSize =(16,16)
@@ -58,7 +67,6 @@ dataset_test = pd.DataFrame({'min_T1': min_T1_test, 'med_T1': med_T1_test, 'mid_
 dataset_test = np.nan_to_num(dataset_test, nan=-1, posinf=99, neginf=-99)
 
 # Best Number of Trees
-from sklearn.metrics import accuracy_score
 accuracy_list = []
 no_trees = [50, 100, 200, 300, 500, 1000, 2000, 5000, 10000]
 for i in no_trees:
@@ -67,7 +75,7 @@ for i in no_trees:
     clf = RandomForestClassifier(n_estimators = i, max_features = 'sqrt', min_samples_split = 2, criterion = 'gini', oob_score = True, bootstrap = True, random_state = 30)
     clf.fit(dataset, Y_train)
     y_pred = (clf.oob_decision_function_[:,1] >= 0.50).astype(bool)
-    accuracy = accuracy_score(Y_train, y_pred)
+    accuracy = metrics.accuracy_score(Y_train, y_pred)
     accuracy_list.append(accuracy)
 
 # Get accuracy for different numbers of trees
@@ -91,17 +99,25 @@ rf_grid = {'n_estimators': n_estimators,
                'max_features': rf_max_features,
                'min_samples_split': rf_min_samples_split,}
 
+def custom_oob_score(Y_train, y_pred):
+    y_pred = (clf.oob_decision_function_[:,1] >= 0.50).astype(bool)
+    accuracy = metrics.accuracy_score(Y_train, y_pred)
+    oob_error = 1- accuracy
+    return oob_error
+
+oob_scorer = metrics.make_scorer(custom_oob_score, greater_is_better = False, needs_proba = True)
+
 scoring_list = {
-    'accuracy': make_scorer(accuracy_score),
-    'sensitivity': make_scorer(recall_score),
-    'specificity': make_scorer(recall_score,pos_label=0)
+    'oob_error': oob_scorer,
+    'sensitivity': metrics.make_scorer(metrics.recall_score),
+    'specificity': metrics.make_scorer(metrics.recall_score,pos_label=0)
 }
 
 # Add trees here
 rf_base = RandomForestClassifier(n_estimators = 5000)
 
 # Create the random search Random Forest
-rf_random = RandomizedSearchCV(estimator = rf_base, scoring = scoring_list, param_distributions = rf_grid, refit = 'accuracy',
+rf_random = model_selection.RandomizedSearchCV(estimator = rf_base, scoring = scoring_list, param_distributions = rf_grid, refit = 'oob_error',
                                n_iter = 50, cv = 5, verbose = 3, random_state = 42, 
                                n_jobs = 1)
 # Fit the random search model
