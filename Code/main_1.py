@@ -1,7 +1,5 @@
-from sklearn import recall_score
 from sklearn import metrics
 from sklearn import model_selection
-from sklearn.model_selection import RandomizedSearchCV
 import cv2
 import pandas as pd
 import numpy as np
@@ -119,7 +117,7 @@ scoring_list = {
 rf_base = RandomForestClassifier(n_estimators = 5000)
 
 # Create the random search Random Forest
-rf_random = RandomizedSearchCV(estimator = rf_base, scoring = scoring_list, param_distributions = rf_grid, refit = 'oob_error',
+rf_random = model_selection.RandomizedSearchCV(estimator = rf_base, scoring = scoring_list, param_distributions = rf_grid, refit = 'oob_error',
                                n_iter = 50, cv = 5, verbose = 3, random_state = 42, 
                                n_jobs = 1)
 # Fit the random search model
