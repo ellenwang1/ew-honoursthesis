@@ -14,15 +14,15 @@ from plots_8 import trees_plot
 def main():
 
     # Setting paths for different folders
-    FLAIR_scan = r'C:\Users\ellen\Documents\ew-honoursthesis\Data\forAudrey.tar\Normalised\FLAIRinT1space_withLacunes_35.tar'
-    T1_Lacunes_Incorrect = r'C:\Users\ellen\Documents\ew-honoursthesis\Data\forAudrey.tar\Original\lacune_T1space.tar'
-    T1_Lacunes_Correct = r'C:\Users\ellen\Documents\ew-honoursthesis\Data\forAudrey.tar\Original\lacune_T1space_JiyangCorrected20210920'
-    T1_scan = r'C:\Users\ellen\Documents\ew-honoursthesis\Data\forAudrey.tar\Normalised\T1_withLacunes_35.tar'
-    T1_Soft_Tissue = r'C:\Users\ellen\Documents\ew-honoursthesis\Data\forAudrey.tar\Normalised\T1softTiss_withLacunes_35.tar'
-    T1_Soft_Tissue_Mask = r'C:\Users\ellen\Documents\ew-honoursthesis\Data\forAudrey.tar\Original\T1softTissMask_withLacunes_35.tar'
-    T1_Soft_Tissue_Binary_Mask = r'C:\Users\ellen\Documents\ew-honoursthesis\Data\forAudrey.tar\Original\T1softTissMask_withLacunes_35_binary.tar'
-    tissue_maps = r'C:\Users\ellen\Downloads\tissue_prob_maps.tar\tissue_prob_maps'
-    mypath_og = r'C:\Users\ellen\Documents\ew-honoursthesis\Data\forAudrey.tar\Original'
+    FLAIR_scan = '/home/z5209394/Data/forAudrey.tar/Normalised/FLAIRinT1space_withLacunes_35.tar'
+    T1_Lacunes_Incorrect = '/home/z5209934/Data/forAudrey.tar/Original/lacune_T1space.tar'
+    T1_Lacunes_Correct = '/home/z5209394/Data/forAudrey.tar/Original/lacune_T1space_JiyangCorrected20210920'
+    T1_scan = '/home/z5209394/Data/forAudrey.tar/Normalised/T1_withLacunes_35.tar'
+    T1_Soft_Tissue = '/home/z5209394/Data/forAudrey.tar/Normalised/T1softTiss_withLacunes_35.tar'
+    T1_Soft_Tissue_Mask = '/home/z5209394/Data/forAudrey.tar/Original/T1softTissMask_withLacunes_35.tar'
+    T1_Soft_Tissue_Binary_Mask = '/home/z5209394/Data/forAudrey.tar/Original/T1softTissMask_withLacunes_35_binary.tar'
+    tissue_maps = '/home/z5209394/Data/tissue_prob_maps.tar/tissue_prob_maps'
+    mypath_og = '/home/z5209394/Data/forAudrey.tar/Original'
 
     # Prepare data
     normalise(mypath_og)
@@ -130,4 +130,5 @@ def main():
 
 
 if __name__ == '__main__':
+    print("hello")
     main()
