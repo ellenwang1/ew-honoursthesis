@@ -4,6 +4,7 @@ import numpy as np
 
 def normalise(mypath_og):
     for root, dirs, files in os.walk(mypath_og, topdown=False):
+        print(root)
         for file in files:
             if file.endswith(".nii.gz"):
                 imgpath = os.path.join(root, file)

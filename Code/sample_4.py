@@ -354,9 +354,9 @@ def test_sampling(CSF, GM, WM, T1_Soft_Tissue_Binary_Mask, T1_scan_data, FLAIR_s
             
             #Sample lacunes
             #Sample lacunes
-            sampled_list_x = np.random.choice(data.shape[0], 15000)
-            sampled_list_y = np.random.choice(data.shape[1], 15000)
-            sampled_list_z = np.random.choice(data.shape[2], 15000)
+            sampled_list_x = np.random.choice(data.shape[0], 30000)
+            sampled_list_y = np.random.choice(data.shape[1], 30000)
+            sampled_list_z = np.random.choice(data.shape[2], 30000)
             for x,y,z in set(list(zip(sampled_list_x, sampled_list_y,sampled_list_z))):
                 #filter for soft tissue
                 if (x < 50) | (y < 70) | (z < 15) | (x > 200) | (y > 210) | (z > 165) | (T1_data_scans[x,y,z] == 0) | (FLAIR_data_scans[x,y,z] == 0):
@@ -395,9 +395,8 @@ def test_sampling(CSF, GM, WM, T1_Soft_Tissue_Binary_Mask, T1_scan_data, FLAIR_s
 
                         lacune_binary = Lacune_data[x-10:x+10, y-10:y+10, z-10:z+10]
 
-                        lacune_centre = Lacune_data[x-1:x+1, y-1:y+1, z-1:z+1]
-                        if any(1 in sublist for sublist in lacune_centre):
-                            print(lacune_centre)
+                        if Lacune_data[x,y,z] == 1:
+                            print(brain_values[0])
                             X_test_3D_lacune.append(brain_values)
                             Y_test_3D_lacune.append(1)
                             Y_test_segment_3D_lacune.append(lacune_binary)
