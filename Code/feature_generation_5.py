@@ -784,7 +784,7 @@ def feature_gen_test(filterSize, kernel, X_test):
         med_th_st_test.append(np.median(tophat_img_st_test))
         mid_th_st_test.append(tophat_img_st_test[10,10,10])
         mid_vsmall_ratio_th_st_test.append(np.mean(tophat_img_st_test[9:11, 9:11, 9:11])/((sum(sum(sum(tophat_img_st_test[8:12, 8:12, 8:12]))) - sum(sum(sum(tophat_img_st_test[9:11, 9:11, 9:11]))))/56))
-        mid_small_ratio_th_st_test.append(np.mean(tophat_img_st_test[8:12, 8:12, 8:12])/((sum(sum(sum(tophat_img_st[7:13, 7:13, 7:13]))) - sum(sum(sum(tophat_img_st_test[8:12, 8:12, 8:12]))))/152))
+        mid_small_ratio_th_st_test.append(np.mean(tophat_img_st_test[8:12, 8:12, 8:12])/((sum(sum(sum(tophat_img_st_test[7:13, 7:13, 7:13]))) - sum(sum(sum(tophat_img_st_test[8:12, 8:12, 8:12]))))/152))
         mid_med_ratio_th_st_test.append(np.mean(tophat_img_st_test[7:13, 7:13, 7:13])/((sum(sum(sum(tophat_img_st_test[6:14, 6:14, 6:14]))) - sum(sum(sum(tophat_img_st_test[7:13, 7:13, 7:13]))))/296))
         mid_large_ratio_th_st_test.append(np.mean(tophat_img_st_test[6:14, 6:14, 6:14])/((sum(sum(sum(tophat_img_st_test[3:17, 3:17, 3:17]))) - sum(sum(sum(tophat_img_st_test[6:14, 6:14, 6:14]))))/2232))
         mid_vsmall_ratio_th_st_inc_test.append(np.mean(tophat_img_st_test[9:11, 9:11, 9:11])/((sum(sum(sum(tophat_img_st_test[8:12, 8:12, 8:12]))))/64))

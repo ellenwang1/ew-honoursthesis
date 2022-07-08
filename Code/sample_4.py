@@ -31,7 +31,7 @@ def sample_lacunes(CSF, GM, WM, T1_Soft_Tissue_Binary_Mask, T1_scan_data, FLAIR_
             #Sample lacunes
             for x in range(0, data.shape[0]):
                 for y in range(0, data.shape[1]):
-                    for z in range(0, data.shape[2]):
+                    for z in range(0, 180):
                         #filter for soft tissue
                         if (x < 50) | (y < 70) | (z < 15) | (x > 200) | (y > 210) | (z > 165) | (T1_data_scans[x,y,z] == 0) | (FLAIR_data_scans[x,y,z] == 0):
                             next
@@ -247,8 +247,6 @@ def sample_lacunes(CSF, GM, WM, T1_Soft_Tissue_Binary_Mask, T1_scan_data, FLAIR_
                                     Y_train_segment_3D_lacune.append(lacune_binary_rot270x)
                                     Y_train_segment_3D_lacune.append(lacune_binary_rot270y)
                                     Y_train_segment_3D_lacune.append(lacune_binary_rot270z)
-                                    
-                                    print("appended a sample")
                             
             brain_image += 1
             print(brain_image)
@@ -279,7 +277,7 @@ def non_lacune_sampling(CSF, GM, WM, T1_Soft_Tissue_Binary_Mask, T1_scan_data, F
             #Sample lacunes
             sampled_list_x = np.random.choice(data.shape[0], 2500)
             sampled_list_y = np.random.choice(data.shape[1], 2500)
-            sampled_list_z = np.random.choice(data.shape[2], 2500)
+            sampled_list_z = np.random.choice(180, 2500)
             for x,y,z in set(list(zip(sampled_list_x, sampled_list_y,sampled_list_z))):
                 #filter for soft tissue
                 if (x < 50) | (y < 70) | (z < 15) | (x > 200) | (y > 210) | (z > 165) |  (T1_data_scans[x,y,z] == 0) | (FLAIR_data_scans[x,y,z] == 0):
@@ -356,7 +354,7 @@ def test_sampling(CSF, GM, WM, T1_Soft_Tissue_Binary_Mask, T1_scan_data, FLAIR_s
             #Sample lacunes
             sampled_list_x = np.random.choice(data.shape[0], 30000)
             sampled_list_y = np.random.choice(data.shape[1], 30000)
-            sampled_list_z = np.random.choice(data.shape[2], 30000)
+            sampled_list_z = np.random.choice(180, 30000)
             for x,y,z in set(list(zip(sampled_list_x, sampled_list_y,sampled_list_z))):
                 #filter for soft tissue
                 if (x < 50) | (y < 70) | (z < 15) | (x > 200) | (y > 210) | (z > 165) | (T1_data_scans[x,y,z] == 0) | (FLAIR_data_scans[x,y,z] == 0):

@@ -12,7 +12,7 @@ from rf_build_6 import best_number_of_trees
 from plots_8 import trees_plot
 
 def main():
-
+    print("here")
     # Setting paths for different folders
     FLAIR_scan = '/home/z5209394/Data/forAudrey.tar/Normalised/FLAIRinT1space_withLacunes_35.tar'
     T1_Lacunes_Incorrect = '/home/z5209934/Data/forAudrey.tar/Original/lacune_T1space.tar'
@@ -25,13 +25,14 @@ def main():
     mypath_og = '/home/z5209394/Data/forAudrey.tar/Original'
 
     # Prepare data
-    normalise(mypath_og)
+    #normalise(mypath_og)
 
     # Import normalised data into relevant variables
     CSF, WM, GM = probability_tissue_maps(tissue_maps)
+    print("maps read")
     T1_scan_data, FLAIR_scan_data, Lacune_indicator_data, Soft_tiss_data \
         = read_data(T1_scan, FLAIR_scan, T1_Lacunes_Correct, T1_Soft_Tissue)
-
+    print("scans read")
     # Sample Train - Lacunes
     X_train_3D_lacune, Y_train_3D_lacune, Y_train_segment_3D_lacune, X_train_3D_nlacune, \
         Y_train_3D_nlacune, Y_train_segment_3D_nlacune = sample_lacunes(CSF, GM, WM, \
@@ -54,6 +55,7 @@ def main():
         X_train_3D_nlacune_func2, Y_train_3D_nlacune_func2, Y_train_segment_3D_nlacune_func2, X_test_3D_lacune, \
         Y_test_3D_lacune, Y_test_segment_3D_lacune, X_test_3D_nlacune, Y_test_3D_nlacune, Y_test_segment_3D_nlacune)
 
+    print(len(X_test))
     # Generate Train Features
     filterSize =(16,16)
     kernel = cv2.getStructuringElement(cv2.MORPH_RECT,filterSize)
