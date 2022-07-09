@@ -392,9 +392,9 @@ def test_sampling(CSF, GM, WM, T1_Soft_Tissue_Binary_Mask, T1_scan_data, FLAIR_s
                         brain_values.append(patch_3D_GM)
 
                         lacune_binary = Lacune_data[x-10:x+10, y-10:y+10, z-10:z+10]
-
-                        if Lacune_data[x,y,z] == 1:
-                            print(brain_values[0])
+			lacune_inner = Lacune_data[x-1:x+1, y-1:y+1, z-1:z+1]
+                        if any(1 in sublist for sublist in lacune_inner):
+                            print(lacune_inner)
                             X_test_3D_lacune.append(brain_values)
                             Y_test_3D_lacune.append(1)
                             Y_test_segment_3D_lacune.append(lacune_binary)
@@ -414,6 +414,7 @@ def train_test_combine(X_train_3D_lacune, Y_train_3D_lacune, Y_train_segment_3D_
     X_train = np.concatenate((X_train_3D_lacune, X_train_3D_nlacune_all), axis=0)
     Y_train = np.concatenate((Y_train_3D_lacune, Y_train_3D_nlacune_all), axis=0)
     Y_train_segment = np.concatenate((Y_train_segment_3D_lacune, Y_train_segment_3D_nlacune_all), axis=0)
+    print(len(Y_test_segment_3D_lacune), len(Y_test_segment_3D_nlacune))
     Y_test_segment = np.concatenate((Y_test_segment_3D_lacune, Y_test_segment_3D_nlacune), axis=0)
     Y_test = np.concatenate((Y_test_3D_lacune, Y_test_3D_nlacune), axis=0)
     X_test = np.concatenate((X_test_3D_lacune, X_test_3D_nlacune), axis=0)
