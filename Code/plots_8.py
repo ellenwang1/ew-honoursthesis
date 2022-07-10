@@ -10,4 +10,4 @@ def trees_plot(error_list):
     plt.xticks(index, no_trees)
     plt.title('Performance of Random Forest on different number of trees')
     plt.legend()
-    plt.savefig('no_trees.png')
+    plt.savefig('/home/z5209394/ew-honoursthesis/Graphs/no_trees.png')
