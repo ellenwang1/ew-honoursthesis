@@ -22,6 +22,7 @@ def best_number_of_trees(dataset, Y_train):
 	return accuracy_list, error_list
 
 def cv_folds(dataset_b, Y_train):
+<<<<<<< HEAD
 	# Cv list
 	cv_1_data = []
 	cv_2_data = []
@@ -66,6 +67,52 @@ def cv_folds(dataset_b, Y_train):
 					cv_5_data.append(np.delete(dataset_b[i], 0))
 					cv_5_train.append(Y_train[i])
 	return cv_1_data, cv_2_data, cv_3_data, cv_4_data, cv_5_data, cv_1_idx, cv_2_idx, cv_3_idx, cv_4_idx, cv_5_idx, cv_1_brains, cv_2_brains, cv_3_brains, cv_4_brains, cv_5_brains, cv_1_train, cv_2_train, cv_3_train, cv_4_train, cv_5_train 
+=======
+    # Cv list
+    cv_1_data = []
+    cv_2_data = []
+    cv_3_data = []
+    cv_4_data = []
+    cv_5_data = []
+    cv_1_idx = []
+    cv_2_idx = []
+    cv_3_idx = []
+    cv_4_idx = []
+    cv_5_idx = []
+    cv_1_brains = [1183, 2208, 1448, 2733, 1070]
+    cv_2_brains = [430, 46, 6324, 5568, 1477]
+    cv_3_brains = [1224, 1873, 4689, 2777, 4442]
+    cv_4_brains = [1243, 1242, 2396, 4837, 4968]
+    cv_5_brains = [4848, 3318, 4602, 891, 1535]
+    cv_1_train = []
+    cv_2_train = []
+    cv_3_train = []
+    cv_4_train = []
+    cv_5_train = []
+    
+    for i in range(dataset_b.shape[0]):
+            if dataset_b[i][0] in cv_1_brains:
+                    cv_1_idx.append(i)
+                    cv_1_data.append(np.delete(dataset_b[i], 0))
+                    cv_1_train.append(Y_train[i])
+            elif dataset_b[i][0] in cv_2_brains:
+                    cv_2_idx.append(i)
+                    cv_2_data.append(np.delete(dataset_b[i], 0))
+                    cv_2_train.append(Y_train[i])
+            elif dataset_b[i][0] in cv_3_brains:
+                    cv_3_idx.append(i)
+                    cv_3_data.append(np.delete(dataset_b[i], 0))
+                    cv_3_train.append(Y_train[i])
+            elif dataset_b[i][0] in cv_4_brains:
+                    cv_4_idx.append(i)
+                    cv_4_data.append(np.delete(dataset_b[i], 0))
+                    cv_4_train.append(Y_train[i])
+            elif dataset_b[i][0] in cv_5_brains:
+                    cv_5_idx.append(i)
+                    cv_5_data.append(np.delete(dataset_b[i], 0))
+                    cv_5_train.append(Y_train[i])
+    return cv_1_data, cv_2_data, cv_3_data, cv_4_data, cv_5_data, cv_1_idx, cv_2_idx, cv_3_idx, cv_4_idx, cv_5_idx, cv_1_brains, cv_2_brains, cv_3_brains, cv_4_brains, cv_5_brains, cv_1_train, cv_2_train, cv_3_train, cv_4_train, cv_5_train 
+>>>>>>> 2798dff... return values for cv split
 
 def find_mean_thresh(classifier, cv_splits, dataset, Y_train, rf_random):
 	tprs = []
