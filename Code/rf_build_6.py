@@ -64,6 +64,7 @@ def cv_folds(dataset_b, Y_train):
                     cv_5_idx.append(i)
                     cv_5_data.append(np.delete(dataset_b[i], 0))
                     cv_5_train.append(Y_train[i])
+    return cv_1_data, cv_2_data, cv_3_data, cv_4_data, cv_5_data, cv_1_idx, cv_2_idx, cv_3_idx, cv_4_idx, cv_5_idx, cv_1_brains, cv_2_brains, cv_3_brains, cv_4_brains, cv_5_brains, cv_1_train, cv_2_train, cv_3_train, cv_4_train, cv_5_train 
 
 def find_mean_thresh(classifier, cv_splits, dataset, Y_train, rf_random):
     tprs = []
