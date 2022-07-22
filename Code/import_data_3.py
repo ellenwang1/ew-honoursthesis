@@ -1,4 +1,5 @@
 import nibabel as nib
+import numpy as np
 import os
 import re
 
@@ -25,6 +26,7 @@ def probability_tissue_maps(tissue_maps):
                 data = img.get_fdata()
                 Data_list.append(file_id)
                 Data_list.append(data)
+                print(np.mean(data.mean))
                 GM.append(Data_list)
             if file.find("WM"):
                 Data_list = []
@@ -34,6 +36,7 @@ def probability_tissue_maps(tissue_maps):
                 data = img.get_fdata()
                 Data_list.append(file_id)
                 Data_list.append(data)
+                print(np.mean(data.mean))
                 WM.append(Data_list)
     return CSF, WM, GM
 
