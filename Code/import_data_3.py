@@ -25,7 +25,7 @@ def probability_tissue_maps(tissue_maps):
                 data = img.get_fdata()
                 Data_list.append(file_id)
                 Data_list.append(data)
-                WM.append(Data_list)
+                GM.append(Data_list)
             if file.find("WM"):
                 Data_list = []
                 file_id = int(re.search(r'\d+', file)[0])
@@ -34,7 +34,7 @@ def probability_tissue_maps(tissue_maps):
                 data = img.get_fdata()
                 Data_list.append(file_id)
                 Data_list.append(data)
-                GM.append(Data_list)
+                WM.append(Data_list)
     return CSF, WM, GM
 
 def read_data(T1_scan, FLAIR_scan, T1_Lacunes_Correct, T1_Soft_Tissue):
