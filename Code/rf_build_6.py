@@ -74,20 +74,19 @@ def find_mean_thresh(classifier, cv_splits, dataset, Y_train, rf_random):
 	mean_fpr = np.linspace(0, 1, 100)
 	threshold = []
 	# Get best thresholds
-	for j in range(0,10):
-		fig, ax = plt.subplots()
-		for i, (train, test) in enumerate(cv_splits):
-			classifier.fit(dataset[train],Y_train[train])
-			viz = plot_roc_curve(classifier, dataset[test], Y_train[test],
-								name='ROC fold {}'.format(i),
-								alpha=0.3, lw=1, ax=ax)
-			#y_pred_scores = (classifier.predict_proba(X_test)[:,1] >= 0.3).astype(bool) # set threshold as 0.3
-			y_pred_scores = classifier.predict_proba(dataset[test])
-			fpr, tpr, thresholds = roc_curve(Y_train[test], y_pred_scores[:, -1])
-			optimal_idx = np.argmax(tpr-fpr)
-			optimal_threshold = thresholds[optimal_idx]
-			threshold.append(optimal_threshold)
-			print("Threshold value is:", optimal_threshold)
+	fig, ax = plt.subplots()
+	for i, (train, test) in enumerate(cv_splits):
+		classifier.fit(dataset[train],Y_train[train])
+		viz = plot_roc_curve(classifier, dataset[test], Y_train[test],
+							name='ROC fold {}'.format(i),
+							alpha=0.3, lw=1, ax=ax)
+		#y_pred_scores = (classifier.predict_proba(X_test)[:,1] >= 0.3).astype(bool) # set threshold as 0.3
+		y_pred_scores = classifier.predict_proba(dataset[test])
+		fpr, tpr, thresholds = roc_curve(Y_train[test], y_pred_scores[:, -1])
+		optimal_idx = np.argmax(tpr-fpr)
+		optimal_threshold = thresholds[optimal_idx]
+		threshold.append(optimal_threshold)
+		print("Threshold value is:", optimal_threshold)
 	
 	mean_thresh = np.mean(threshold)
 	return tprs, aucs, mean_thresh
