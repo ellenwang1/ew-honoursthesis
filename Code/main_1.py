@@ -120,7 +120,7 @@ def main():
 	n_estimators = 5000
 
 	# Number of features to consider at every split
-	rf_max_features = ['sqrt', 9, 10, 11, 12, 13, 14,15, 16, 17, 18, 19, 20]
+	rf_max_features = ['sqrt', 9, 10, 11, 12, 13, 14,15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25]
 
 	# Minimum number of samples required to split a node
 	rf_min_samples_split = [int(x) for x in np.linspace(2, 20, 19)]

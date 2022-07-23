@@ -65,13 +65,13 @@ def feature_importance_plot(clf, dataset_pd, Y_train):
 	tree_indices = np.arange(0, len(clf.feature_importances_)) + 0.5
 
 	fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 8))
-	ax1.barh(tree_indices[-15:], clf.feature_importances_[tree_importance_sorted_idx][-15:], height=0.7)
-	ax1.set_yticks(tree_indices[-15:])
-	ax1.set_yticklabels(dataset_pd.columns[tree_importance_sorted_idx][-15:])
+	ax1.barh(tree_indices[-30:], clf.feature_importances_[tree_importance_sorted_idx][-30:], height=0.7)
+	ax1.set_yticks(tree_indices[-30:])
+	ax1.set_yticklabels(dataset_pd.columns[tree_importance_sorted_idx][-30:])
 	ax2.boxplot(
-		result.importances[perm_sorted_idx][-15:].T,
+		result.importances[perm_sorted_idx][-30:].T,
 		vert=False,
-		labels=dataset_pd.columns[perm_sorted_idx][-15:],
+		labels=dataset_pd.columns[perm_sorted_idx][-30:],
 	)
 	fig.tight_layout()
 	plt.savefig('/home/z5209394/ew-honoursthesis/Graphs/feature_importance.png')
