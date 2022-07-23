@@ -26,7 +26,7 @@ def probability_tissue_maps(tissue_maps):
                 data = img.get_fdata()
                 Data_list.append(file_id)
                 Data_list.append(data)
-                print(np.mean(data.mean))
+                print(np.mean(data))
                 GM.append(Data_list)
             if file.find("WM"):
                 Data_list = []
@@ -36,7 +36,7 @@ def probability_tissue_maps(tissue_maps):
                 data = img.get_fdata()
                 Data_list.append(file_id)
                 Data_list.append(data)
-                print(np.mean(data.mean))
+                print(np.mean(data))
                 WM.append(Data_list)
     return CSF, WM, GM
 

@@ -113,14 +113,11 @@ def main():
 
 	# Remove brain from datafram
 	dataset = np.concatenate([cv_1_data, cv_2_data, cv_3_data, cv_4_data, cv_5_data])
-	
-	dataset_test = []
-	for i in range(dataset_test_b.shape[0]):
-		dataset_test.append(np.delete(dataset_test_b[i], 0))																	
+	dataset_test = dataset_test_b[:,1:]																	
 
 	# Randomized Search CV 
 	# Number of trees in Random Forest
-	n_estimators = 50
+	n_estimators = 5000
 
 	# Number of features to consider at every split
 	rf_max_features = ['sqrt', 9, 10, 11, 12, 13, 14,15, 16, 17, 18, 19, 20]
@@ -187,15 +184,15 @@ def main():
 	feature_importance_plot(classifier, dataset_pd, Y_train)
 
 	# Classifier predict
-	predictions = (classifier.predict_proba(dataset_test)[:1] >= 0.15).astype(bool)
+	predictions = (classifier.predict_proba(dataset_test)[:,1] >= 0.15).astype(bool)
 	Y_test=Y_test.reshape((len(Y_test),1))
 	print(confusion_matrix(Y_test, predictions))
 
-	predictions = (classifier.predict_proba(dataset_test)[:1] >= mean_thresh).astype(bool)
+	predictions = (classifier.predict_proba(dataset_test)[:,1] >= mean_thresh).astype(bool)
 	Y_test=Y_test.reshape((len(Y_test),1))
 	print(confusion_matrix(Y_test, predictions))
 
-	predictions = (classifier.predict_proba(dataset_test)[:1] >= 0.5).astype(bool)
+	predictions = (classifier.predict_proba(dataset_test)[:,1] >= 0.5).astype(bool)
 	Y_test=Y_test.reshape((len(Y_test),1))
 	print(confusion_matrix(Y_test, predictions))
 																								
