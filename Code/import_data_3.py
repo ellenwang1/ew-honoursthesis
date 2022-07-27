@@ -8,7 +8,7 @@ def probability_tissue_maps(tissue_maps):
     WM = []
     GM = []
     for file in os.listdir(tissue_maps):
-        if file.endswith(".nii.gz"):
+        if file.endswith(".nii"):
             if file.find("CSF"):
                 Data_list = []
                 file_id = int(re.search(r'\d+', file)[0])
