@@ -9,14 +9,13 @@ from sklearn.metrics import confusion_matrix
 from sklearn.metrics import classification_report
 import matplotlib.pyplot as plt
 import seaborn as sns
-from Code.plots_8 import density_plots
 
 from normalise_2 import normalise
 from import_data_3 import probability_tissue_maps, read_data
 from sample_4 import sample_lacunes, non_lacune_sampling, test_sampling, train_test_combine
 from feature_generation_5 import feature_gen_train, feature_gen_test
 from rf_build_6 import best_number_of_trees, cv_folds, find_mean_thresh
-from plots_8 import trees_plot, plot_auc_roc_thresholds, feature_importance_plot
+from plots_8 import trees_plot, plot_auc_roc_thresholds, feature_importance_plot, density_plots
 
 def main():
 	print("here")
