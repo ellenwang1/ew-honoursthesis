@@ -111,6 +111,11 @@ def main():
 	Y_train = np.load('/home/z5209394/Data/y_train.npy')
 	Y_test = np.load('/home/z5209394/Data/y_test.npy')
 	print('features saved')
+
+	# Remove brain from datafram
+	dataset = dataset_b[:,1:]	
+	dataset_test = dataset_test_b[:,1:]		
+	
 	# Best Number of Trees
 	accuracy_list = []
 	no_trees = [50, 100, 200, 300, 500, 1000, 2000, 5000, 10000]
@@ -129,11 +134,7 @@ def main():
 	trees_plot(error_list)
 
 	# CV-Folds
-	#cv_1_data, cv_2_data, cv_3_data, cv_4_data, cv_5_data, cv_1_idx, cv_2_idx, cv_3_idx, cv_4_idx, cv_5_idx, cv_1_brains, cv_2_brains, cv_3_brains, cv_4_brains, cv_5_brains, cv_1_train, cv_2_train, cv_3_train, cv_4_train, cv_5_train = cv_folds(dataset_b, Y_train)
-
-	# Remove brain from datafram
-	dataset = dataset_b[:,1:]	
-	dataset_test = dataset_test_b[:,1:]																																																																																																																																								
+	#cv_1_data, cv_2_data, cv_3_data, cv_4_data, cv_5_data, cv_1_idx, cv_2_idx, cv_3_idx, cv_4_idx, cv_5_idx, cv_1_brains, cv_2_brains, cv_3_brains, cv_4_brains, cv_5_brains, cv_1_train, cv_2_train, cv_3_train, cv_4_train, cv_5_train = cv_folds(dataset_b, Y_train)																																																																																																																																						
 
 	# Randomized Search CV 
 	# Number of trees in Random Forest
