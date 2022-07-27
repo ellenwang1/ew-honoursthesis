@@ -75,7 +75,7 @@ def feature_importance_plot(clf, dataset_pd, Y_train):
 	)
 	fig.tight_layout()
 	plt.savefig('/home/z5209394/ew-honoursthesis/Graphs/feature_importance.png')
-	return list(dataset_pd.columns[perm_sorted_idx][-30:])
+	return list(dataset_pd.columns[perm_sorted_idx][-30:]), list(result.importances[perm_sorted_idx][-30].T)
 
 def density_plots(perm_sorted_idx, dataset_combined):
 	for variable in perm_sorted_idx:
