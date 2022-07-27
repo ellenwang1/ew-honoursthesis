@@ -117,21 +117,21 @@ def main():
 	dataset_test = dataset_test_b[:,1:]		
 
 	# Best Number of Trees
-	accuracy_list = []
-	no_trees = [50, 100, 200, 300, 500, 1000, 2000, 5000, 10000]
-	for i in no_trees:
-		#max features, min sample split 
-		clf = RandomForestClassifier(n_estimators = i, criterion = 'gini', oob_score = True, bootstrap = True)
-		clf.fit(dataset, Y_train)
-		y_pred = (clf.oob_decision_function_[:,1] >= 0.50).astype(bool)
-		accuracy = metrics.accuracy_score(Y_train, y_pred)
-		accuracy_list.append(accuracy)
+	#accuracy_list = []
+	#no_trees = [50, 100, 200, 300, 500, 1000, 2000, 5000, 10000]
+	#for i in no_trees:
+	#	max features, min sample split 
+	#	clf = RandomForestClassifier(n_estimators = i, criterion = 'gini', oob_score = True, bootstrap = True)
+	#	clf.fit(dataset, Y_train)
+	#	y_pred = (clf.oob_decision_function_[:,1] >= 0.50).astype(bool)
+	#	accuracy = metrics.accuracy_score(Y_train, y_pred)
+	#	accuracy_list.append(accuracy)
 
 	# Get accuracy for different numbers of trees
-	error_list, accuracy_list = best_number_of_trees(dataset, Y_train)
+	#error_list, accuracy_list = best_number_of_trees(dataset, Y_train)
 
 	# Generate plot
-	trees_plot(error_list)
+	#trees_plot(error_list)
 	print("no trees plotted")
 
 	# CV-Folds
@@ -200,7 +200,8 @@ def main():
 
 	# Saved classifier
 	classifier = RandomForestClassifier()
-	classifier.set_params({'oob_score': True, 'n_estimators': 5000, 'min_samples_split': 2, 'max_features': 22, 'criterion': 'gini', 'bootstrap': True})
+	params = {'oob_score': True, 'n_estimators': 5000, 'min_samples_split': 2, 'max_features': 22, 'criterion': 'gini', 'bootstrap': True}
+	classifier.set_params(**params)
 	classifier.fit(dataset, Y_train)
 
 	dataset_pd = pd.DataFrame(dataset, columns = ['min_T1', 'med_T1', 'mid_T1', 'mid_vsmall_ratio_T1', 'mid_small_ratio_T1', 'mid_med_ratio_T1', 'mid_large_ratio_T1', 'mid_vsmall_ratio_T1_inc', 'mid_small_ratio_T1_inc', 'mid_med_ratio_T1_inc', 'mid_large_ratio_T1_inc', 'mean_T1', 'max_T1', 'var_T1','range_T1', 'H_T1_e1', 'H_T1_e2', 'H_T1_e3', 'min_FLAIR', 'mid_FLAIR', 'med_FLAIR', 'mid_vsmall_ratio_FLAIR', 'mid_small_ratio_FLAIR', 'mid_med_ratio_FLAIR', 'mid_large_ratio_FLAIR', 'mid_vsmall_ratio_FLAIR_inc', 'mid_small_ratio_FLAIR_inc', 'mid_med_ratio_FLAIR_inc', 'mid_large_ratio_FLAIR_inc','mean_FLAIR', 'max_FLAIR', 'var_FLAIR','range_FLAIR','H_FLAIR_e1', 'H_FLAIR_e2', 'H_FLAIR_e3','density_diff', 'sum_soft_tiss_binary', 'sum_percent_soft_tiss', 'min_st', 'med_st', 'mid_st', 'mid_vsmall_ratio_st', 'mid_small_ratio_st','mid_med_ratio_st', 'mid_large_ratio_st', 'mid_vsmall_ratio_st_inc','mid_small_ratio_st_inc', 'mid_med_ratio_st_inc', 'mid_large_ratio_st_inc', 'mean_st', 'max_st', 'var_st','range_st','H_st_e1', 'H_st_e2', 'H_st_e3','min_stm', 'med_stm', 'mid_stm', 'mid_vsmall_ratio_stm', 'mid_small_ratio_stm','mid_med_ratio_stm', 'mid_large_ratio_stm', 'mid_vsmall_ratio_stm_inc','mid_small_ratio_stm_inc', 'mid_med_ratio_stm_inc', 'mid_large_ratio_stm_inc', 'mean_stm', 'max_stm','var_stm','range_stm', 'H_stm_e1', 'H_stm_e2', 'H_stm_e3','min_th_T1', 'med_th_T1', 'mid_th_T1', 'mid_vsmall_ratio_th_T1', 'mid_small_ratio_th_T1', 'mid_med_ratio_th_T1', 'mid_large_ratio_th_T1', 'mid_vsmall_ratio_th_T1_inc', 'mid_small_ratio_th_T1_inc', 'mid_med_ratio_th_T1_inc', 'mid_large_ratio_th_T1_inc', 'mean_th_T1', 'max_th_T1', 'var_th_T1','range_th_T1','H_th_T1_e1', 'H_th_T1_e2', 'H_th_T1_e3','min_th_FLAIR', 'med_th_FLAIR', 'mid_th_FLAIR', 'mid_vsmall_ratio_th_FLAIR', 'mid_small_ratio_th_FLAIR', 'mid_med_ratio_th_FLAIR', 'mid_large_ratio_th_FLAIR', 'mid_vsmall_ratio_th_FLAIR_inc', 'mid_small_ratio_th_FLAIR_inc', 'mid_med_ratio_th_FLAIR_inc', 'mid_large_ratio_th_FLAIR_inc', 'mean_th_FLAIR', 'max_th_FLAIR', 'var_th_FLAIR','range_th_FLAIR','H_th_FLAIR_e1', 'H_th_FLAIR_e2', 'H_th_FLAIR_e3','min_th_st', 'med_th_st', 'mid_th_st', 'mid_vsmall_ratio_th_st','mid_small_ratio_th_st', 'mid_med_ratio_th_st', 'mid_large_ratio_th_st', 'mid_vsmall_ratio_th_st_inc','mid_small_ratio_th_st_inc', 'mid_med_ratio_th_st_inc', 'mid_large_ratio_th_st_inc', 'mean_th_st', 'max_th_st','var_th_st','range_th_st', 'H_th_st_e1', 'H_th_st_e2', 'H_th_st_e3','min_bh_T1', 'med_bh_T1', 'mid_bh_T1', 'mid_vsmall_ratio_bh_T1','mid_small_ratio_bh_T1', 'mid_med_ratio_bh_T1', 'mid_large_ratio_bh_T1', 'mid_vsmall_ratio_bh_T1_inc','mid_small_ratio_bh_T1_inc', 'mid_med_ratio_bh_T1_inc', 'mid_large_ratio_bh_T1_inc', 'mean_bh_T1', 'max_bh_T1', 'var_bh_T1','range_bh_T1', 'H_bh_T1_e1', 'H_bh_T1_e2', 'H_bh_T1_e3','min_bh_FLAIR', 'med_bh_FLAIR', 'mid_bh_FLAIR', 'mid_vsmall_ratio_bh_FLAIR', 'mid_small_ratio_bh_FLAIR', 'mid_med_ratio_bh_FLAIR', 'mid_large_ratio_bh_FLAIR', 'mid_vsmall_ratio_bh_FLAIR_inc', 'mid_small_ratio_bh_FLAIR_inc', 'mid_med_ratio_bh_FLAIR_inc', 'mid_large_ratio_bh_FLAIR_inc', 'mean_bh_FLAIR', 'max_bh_FLAIR','var_bh_FLAIR','range_bh_FLAIR','H_bh_FLAIR_e1', 'H_bh_FLAIR_e2', 'H_bh_FLAIR_e3','min_bh_st', 'med_bh_st', 'mid_bh_st', 'mid_vsmall_ratio_bh_st','mid_small_ratio_bh_st', 'mid_med_ratio_bh_st', 'mid_large_ratio_bh_st', 'mid_vsmall_ratio_bh_st_inc','mid_small_ratio_bh_st_inc', 'mid_med_ratio_bh_st_inc', 'mid_large_ratio_bh_st_inc', 'mean_bh_st', 'max_bh_st', 'var_bh_st','range_bh_st', 'H_bh_st_e1', 'H_bh_st_e2', 'H_bh_st_e3', 'x', 'y', 'z', 'WMH_x', 'WMH_y' , 'WMH_z', 'CSF', 'GM', 'WM'])
