@@ -5,9 +5,8 @@ from sklearn.metrics import plot_roc_curve
 from sklearn.inspection import permutation_importance
 import seaborn as sns
 
-def trees_plot(error_list):
-	index = np.arange(0,9)
-	no_trees = [50, 100, 200, 300, 500, 1000, 2000, 5000, 10000]
+def trees_plot(error_list, no_trees):
+	index = np.arange(0,len(no_trees))
 	plt.plot(index, error_list, label = "accuracy", linestyle="--")
 	plt.xlabel('No. of Trees')
 	plt.ylabel('OOB_Error')
@@ -59,7 +58,7 @@ def plot_auc_roc_thresholds(classifier, dataset, Y_train, cv_splits, mean_thresh
 
 def feature_importance_plot(clf, dataset_pd, Y_train):
 	# Feature Importance
-	result = permutation_importance(clf, dataset_pd, Y_train, n_repeats=3)
+	result = permutation_importance(clf, dataset_pd, Y_train, n_repeats=10)
 	perm_sorted_idx = result.importances_mean.argsort()
 
 	tree_importance_sorted_idx = np.argsort(clf.feature_importances_)
