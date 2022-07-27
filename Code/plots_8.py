@@ -3,6 +3,7 @@ import matplotlib.pyplot as plt
 from sklearn.metrics import auc
 from sklearn.metrics import plot_roc_curve
 from sklearn.inspection import permutation_importance
+import seaborn as sns
 
 def trees_plot(error_list):
 	index = np.arange(0,9)
@@ -58,7 +59,7 @@ def plot_auc_roc_thresholds(classifier, dataset, Y_train, cv_splits, mean_thresh
 
 def feature_importance_plot(clf, dataset_pd, Y_train):
 	# Feature Importance
-	result = permutation_importance(clf, dataset_pd, Y_train, n_repeats=3, random_state=42)
+	result = permutation_importance(clf, dataset_pd, Y_train, n_repeats=3)
 	perm_sorted_idx = result.importances_mean.argsort()
 
 	tree_importance_sorted_idx = np.argsort(clf.feature_importances_)
@@ -75,3 +76,18 @@ def feature_importance_plot(clf, dataset_pd, Y_train):
 	)
 	fig.tight_layout()
 	plt.savefig('/home/z5209394/ew-honoursthesis/Graphs/feature_importance.png')
+	return list(dataset_pd.columns[perm_sorted_idx][-30:])
+
+def density_plots(perm_sorted_idx, dataset_combined):
+	for variable in perm_sorted_idx:
+		plt.figure(figsize=(15,8))
+		feature = str(variable)
+		ax = sns.kdeplot(dataset_combined[feature][dataset_combined.Lacune == 1], color="darkturquoise", shade=True)
+		sns.kdeplot(dataset_combined[feature][dataset_combined.Lacune == 0], color="lightcoral", shade=True)
+		plt.legend(['Lacune', 'Non-Lacune'])
+		title = "Density Plot of " + feature + "for lacunes and non-lacunes"
+		plt.title(title)
+		ax.set(xlabel='Intensity')
+		plt.xlim(0,1)
+		plt.savefig('/home/z5209394/ew-honoursthesis/Graphs/' + feature + '.png')
+
