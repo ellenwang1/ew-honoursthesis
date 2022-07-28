@@ -34,56 +34,56 @@ def main():
 	# normalise(mypath_og)
 
 	# Import normalised data into relevant variables
-	#CSF, WM, GM = probability_tissue_maps(tissue_maps)
+	CSF, WM, GM = probability_tissue_maps(tissue_maps)
 	print("maps read")
-	#T1_scan_data, FLAIR_scan_data, Lacune_indicator_data, Soft_tiss_data \
-	#	= read_data(T1_scan, FLAIR_scan, T1_Lacunes_Correct, T1_Soft_Tissue)
+	T1_scan_data, FLAIR_scan_data, Lacune_indicator_data, Soft_tiss_data \
+		= read_data(T1_scan, FLAIR_scan, T1_Lacunes_Correct, T1_Soft_Tissue)
 	print("scans read")
 	# Sample Train - Lacunes
-	#X_train_3D_lacune, Y_train_3D_lacune, Y_train_segment_3D_lacune, X_train_3D_nlacune, \
-	#	Y_train_3D_nlacune, Y_train_segment_3D_nlacune = sample_lacunes(CSF, GM, WM, \
-	#	T1_Soft_Tissue_Binary_Mask, T1_scan_data, FLAIR_scan_data, Lacune_indicator_data, Soft_tiss_data)
+	X_train_3D_lacune, Y_train_3D_lacune, Y_train_segment_3D_lacune, X_train_3D_nlacune, \
+		Y_train_3D_nlacune, Y_train_segment_3D_nlacune = sample_lacunes(CSF, GM, WM, \
+		T1_Soft_Tissue_Binary_Mask, T1_scan_data, FLAIR_scan_data, Lacune_indicator_data, Soft_tiss_data)
 	print("lacunes sampled")
 	
 	# Sample Train - Non-Lacunes
-	#X_train_3D_nlacune_func2, Y_train_3D_nlacune_func2, Y_train_segment_3D_nlacune_func2 \
-	#	= non_lacune_sampling(CSF, GM, WM, T1_Soft_Tissue_Binary_Mask, T1_scan_data, \
-	#	FLAIR_scan_data, Lacune_indicator_data, Soft_tiss_data)
+	X_train_3D_nlacune_func2, Y_train_3D_nlacune_func2, Y_train_segment_3D_nlacune_func2 \
+		= non_lacune_sampling(CSF, GM, WM, T1_Soft_Tissue_Binary_Mask, T1_scan_data, \
+		FLAIR_scan_data, Lacune_indicator_data, Soft_tiss_data)
 
 	# Sample Test
-	#X_test_3D_lacune, Y_test_3D_lacune, Y_test_segment_3D_lacune, X_test_3D_nlacune, \
-	#	Y_test_3D_nlacune, Y_test_segment_3D_nlacune = test_sampling(CSF, GM, WM, \
-	#	T1_Soft_Tissue_Binary_Mask, T1_scan_data, FLAIR_scan_data, Lacune_indicator_data, Soft_tiss_data)
+	X_test_3D_lacune, Y_test_3D_lacune, Y_test_segment_3D_lacune, X_test_3D_nlacune, \
+		Y_test_3D_nlacune, Y_test_segment_3D_nlacune = test_sampling(CSF, GM, WM, \
+		T1_Soft_Tissue_Binary_Mask, T1_scan_data, FLAIR_scan_data, Lacune_indicator_data, Soft_tiss_data)
 	print("tests sampled")
 	# Combine Train Test Results
-	#X_train_3D_nlacune_all, Y_train_3D_nlacune_all, Y_train_segment_3D_nlacune_all, X_train, \
-	#	Y_train, Y_train_segment, Y_test_segment, Y_test, X_test = train_test_combine(X_train_3D_lacune, \
-	#	Y_train_3D_lacune, Y_train_segment_3D_lacune, X_train_3D_nlacune, Y_train_3D_nlacune, Y_train_segment_3D_nlacune, \
-	#	X_train_3D_nlacune_func2, Y_train_3D_nlacune_func2, Y_train_segment_3D_nlacune_func2, X_test_3D_lacune, \
-	#	Y_test_3D_lacune, Y_test_segment_3D_lacune, X_test_3D_nlacune, Y_test_3D_nlacune, Y_test_segment_3D_nlacune)
+	X_train_3D_nlacune_all, Y_train_3D_nlacune_all, Y_train_segment_3D_nlacune_all, X_train, \
+		Y_train, Y_train_segment, Y_test_segment, Y_test, X_test = train_test_combine(X_train_3D_lacune, \
+		Y_train_3D_lacune, Y_train_segment_3D_lacune, X_train_3D_nlacune, Y_train_3D_nlacune, Y_train_segment_3D_nlacune, \
+		X_train_3D_nlacune_func2, Y_train_3D_nlacune_func2, Y_train_segment_3D_nlacune_func2, X_test_3D_lacune, \
+		Y_test_3D_lacune, Y_test_segment_3D_lacune, X_test_3D_nlacune, Y_test_3D_nlacune, Y_test_segment_3D_nlacune)
 
 	# First filter
-	#indices = []
-	#X_test_filtered = [] 
-	#Y_test_filtered = []
-	#for iter in range(len(X_test)):
-	#	input_image = X_test[iter][7][:, 15, :]*255
-	#	filterSize =(16,16)
-	#	kernel = cv2.getStructuringElement(cv2.MORPH_RECT,filterSize)
-	#	tophat_img = cv2.morphologyEx(input_image, cv2.MORPH_BLACKHAT,kernel)
-	#	arr = tophat_img[(tophat_img > 75) & (tophat_img < 140)]
-	#	if len(arr) > 0:
-	#		X_test_filtered.append(X_test[iter])
-	#		Y_test_filtered.append(Y_test[iter])
-	#		indices.append(iter)
-	#	iter = iter+1
+	indices = []
+	X_test_filtered = [] 
+	Y_test_filtered = []
+	for iter in range(len(X_test)):
+		input_image = X_test[iter][7][:, 15, :]*255
+		filterSize =(16,16)
+		kernel = cv2.getStructuringElement(cv2.MORPH_RECT,filterSize)
+		tophat_img = cv2.morphologyEx(input_image, cv2.MORPH_BLACKHAT,kernel)
+		arr = tophat_img[(tophat_img > 75) & (tophat_img < 140)]
+		if len(arr) > 0:
+			X_test_filtered.append(X_test[iter])
+			Y_test_filtered.append(Y_test[iter])
+			indices.append(iter)
+		iter = iter+1
 	
-	#print(len(X_test_filtered))
-	#print(sum(Y_test_filtered))			
+	print(len(X_test_filtered))
+	print(sum(Y_test_filtered))			
 	
-	#np.save('/home/z5209394/Data/indices_used.npy', indices)
-	#np.save('/home/z5209394/Data/X_test_filtered.npy', X_test_filtered)	
-	#np.save('/home/z5209394/Data/Y_test_filtered.npy', Y_test_filtered)	
+	np.save('/home/z5209394/Data/indices_used.npy', indices)
+	np.save('/home/z5209394/Data/X_test_filtered.npy', X_test_filtered)	
+	np.save('/home/z5209394/Data/Y_test_filtered.npy', Y_test_filtered)	
 	print("first filter applied")
 	indices = np.load('/home/z5209394/Data/indices_used.npy')
 	Y_test_filtered = np.load('/home/z5209394/Data/Y_test_filtered.npy')
