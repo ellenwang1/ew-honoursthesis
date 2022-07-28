@@ -82,7 +82,6 @@ def main():
 	print(sum(Y_test_filtered))			
 	
 	np.save('/home/z5209394/Data/indices_used.npy', indices)
-	np.save('/home/z5209394/Data/X_test_filtered.npy', X_test_filtered)	
 	np.save('/home/z5209394/Data/Y_test_filtered.npy', Y_test_filtered)	
 	print("first filter applied")
 	indices = np.load('/home/z5209394/Data/indices_used.npy')
