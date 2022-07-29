@@ -352,9 +352,9 @@ def test_sampling(CSF, GM, WM, T1_Soft_Tissue_Binary_Mask, T1_scan_data, FLAIR_s
 			
 			#Sample lacunes
 			#Sample lacunes
-			sampled_list_x = np.random.choice(data.shape[0], 40000)
-			sampled_list_y = np.random.choice(data.shape[1], 40000)
-			sampled_list_z = np.random.choice(180, 40000)
+			sampled_list_x = np.random.choice(data.shape[0], 35000)
+			sampled_list_y = np.random.choice(data.shape[1], 35000)
+			sampled_list_z = np.random.choice(180, 35000)
 			for x,y,z in set(list(zip(sampled_list_x, sampled_list_y,sampled_list_z))):
 				#filter for soft tissue
 				if (x < 50) | (y < 70) | (z < 15) | (x > 200) | (y > 210) | (z > 165) | (T1_data_scans[x,y,z] == 0) | (FLAIR_data_scans[x,y,z] == 0):
