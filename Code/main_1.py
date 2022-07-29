@@ -198,7 +198,7 @@ def main():
 
 	# Saved classifier
 	classifier = RandomForestClassifier()
-	params = {'oob_score': True, 'n_estimators': 7500, 'min_samples_split': 6, 'max_features': 10, 'criterion': 'gini', 'bootstrap': True}
+	params = {'oob_score': True, 'n_estimators': 7500, 'min_samples_split': 3, 'max_features': 10, 'criterion': 'gini', 'bootstrap': True}
 	classifier.set_params(**params)
 	classifier.fit(dataset, Y_train)
 
