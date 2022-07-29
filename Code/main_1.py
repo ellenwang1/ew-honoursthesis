@@ -133,96 +133,96 @@ def main():
 	print("no trees plotted")
 
 	# CV-Folds
-	cv_1_data, cv_2_data, cv_3_data, cv_4_data, cv_5_data, cv_1_idx, cv_2_idx, cv_3_idx, cv_4_idx, cv_5_idx, cv_1_brains, cv_2_brains, cv_3_brains, cv_4_brains, cv_5_brains, cv_1_train, cv_2_train, cv_3_train, cv_4_train, cv_5_train = cv_folds(dataset_b, Y_train)																																																																																																																																						
+	#cv_1_data, cv_2_data, cv_3_data, cv_4_data, cv_5_data, cv_1_idx, cv_2_idx, cv_3_idx, cv_4_idx, cv_5_idx, cv_1_brains, cv_2_brains, cv_3_brains, cv_4_brains, cv_5_brains, cv_1_train, cv_2_train, cv_3_train, cv_4_train, cv_5_train = cv_folds(dataset_b, Y_train)																																																																																																																																						
 
 	# Randomized Search CV 
 	# Number of trees in Random Forest
-	n_estimators = 7500
+	#n_estimators = 7500
 
 	# Number of features to consider at every split
-	rf_max_features = ['sqrt', 9, 10, 11, 12, 13, 14,15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25]
+	#rf_max_features = ['sqrt', 9, 10, 11, 12, 13, 14,15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25]
 
 	# Minimum number of samples required to split a node
-	rf_min_samples_split = [int(x) for x in np.linspace(2, 20, 19)]
+	#rf_min_samples_split = [int(x) for x in np.linspace(2, 20, 19)]
 
 	# Create the grid
-	rf_grid = {'criterion' : ["gini"],
-		'n_estimators': [n_estimators],
-		'bootstrap': [True],
-		'oob_score': [True],
-		'max_features': rf_max_features,
-		'min_samples_split': rf_min_samples_split}
+	#rf_grid = {'criterion' : ["gini"],
+	#	'n_estimators': [n_estimators],
+	#	'bootstrap': [True],
+	#	'oob_score': [True],
+	#	'max_features': rf_max_features,
+	#	'min_samples_split': rf_min_samples_split}
 
 	# Custom CV splits
-	cv_splits = [(cv_1_idx, cv_1_train), (cv_2_idx, cv_2_train), (cv_3_idx, cv_3_train), (cv_4_idx, cv_4_train), (cv_5_idx, cv_5_train)]
+	#cv_splits = [(cv_1_idx, cv_1_train), (cv_2_idx, cv_2_train), (cv_3_idx, cv_3_train), (cv_4_idx, cv_4_train), (cv_5_idx, cv_5_train)]
 
 	# Add trees here
-	rf_base = RandomForestClassifier()
+	#rf_base = RandomForestClassifier()
 
-	def custom_oob_score(estimator, dataset, Y_train):
-		return estimator.oob_score_
+	#def custom_oob_score(estimator, dataset, Y_train):
+	#	return estimator.oob_score_
 
-	scoring_list = {'oob_error': custom_oob_score}
+	#scoring_list = {'oob_error': custom_oob_score}
 
 	# Create the random search Random Forest
-	rf_random = model_selection.RandomizedSearchCV(estimator = rf_base, scoring = scoring_list, param_distributions = rf_grid, refit = 'oob_error',
-		n_iter = 50, cv = cv_splits, verbose = 3, random_state = 42, 
-		n_jobs = 16)
+	#rf_random = model_selection.RandomizedSearchCV(estimator = rf_base, scoring = scoring_list, param_distributions = rf_grid, refit = 'oob_error',
+	#	n_iter = 50, cv = cv_splits, verbose = 3, random_state = 42, 
+	#	n_jobs = 16)
 	# Fit the random search model
-	rf_random.fit(dataset, Y_train)
+	#rf_random.fit(dataset, Y_train)
 
 	# Save results
-	results_params = pd.DataFrame(rf_random.cv_results_)
-	results_params.to_numpy()
+	#results_params = pd.DataFrame(rf_random.cv_results_)
+	#results_params.to_numpy()
 
 	# View the best parameters from the random search model
-	print(rf_random.best_params_)
+	#print(rf_random.best_params_)
 
 	# Classification and ROC analysis
 
 	# Model defined by best parameters
-	classifier = RandomForestClassifier()
-	classifier.set_params(**rf_random.best_params_)
+	#classifier = RandomForestClassifier()
+	#classifier.set_params(**rf_random.best_params_)
 
 	# Define cv splits to find best threshold
-	cv_splits = [(np.concatenate([cv_2_idx, cv_3_idx, cv_4_idx, cv_5_idx]), cv_1_idx), 
-			(np.concatenate([cv_1_idx, cv_3_idx, cv_4_idx, cv_5_idx]), cv_2_idx), 
-			(np.concatenate([cv_1_idx, cv_2_idx, cv_4_idx, cv_5_idx]), cv_3_idx), 
-			(np.concatenate([cv_1_idx, cv_2_idx, cv_3_idx, cv_5_idx]), cv_4_idx), 
-			(np.concatenate([cv_1_idx, cv_2_idx, cv_3_idx, cv_4_idx]), cv_5_idx)]
+	#cv_splits = [(np.concatenate([cv_2_idx, cv_3_idx, cv_4_idx, cv_5_idx]), cv_1_idx), 
+	#		(np.concatenate([cv_1_idx, cv_3_idx, cv_4_idx, cv_5_idx]), cv_2_idx), 
+	#		(np.concatenate([cv_1_idx, cv_2_idx, cv_4_idx, cv_5_idx]), cv_3_idx), 
+	#		(np.concatenate([cv_1_idx, cv_2_idx, cv_3_idx, cv_5_idx]), cv_4_idx), 
+	#		(np.concatenate([cv_1_idx, cv_2_idx, cv_3_idx, cv_4_idx]), cv_5_idx)]
 
-	tprs, aucs, mean_thresh = find_mean_thresh(classifier, cv_splits, dataset, Y_train, rf_random)
+	#tprs, aucs, mean_thresh = find_mean_thresh(classifier, cv_splits, dataset, Y_train, rf_random)
 
 	# Run classifier with cross-validation and plot ROC curves
-	plot_auc_roc_thresholds(classifier, dataset, Y_train, cv_splits, mean_thresh)
+	#plot_auc_roc_thresholds(classifier, dataset, Y_train, cv_splits, mean_thresh)
 
 	# Saved classifier
-	#classifier = RandomForestClassifier()
-	#params = {'oob_score': True, 'n_estimators': 5000, 'min_samples_split': 2, 'max_features': 22, 'criterion': 'gini', 'bootstrap': True}
-	#classifier.set_params(**params)
-	#classifier.fit(dataset, Y_train)
+	classifier = RandomForestClassifier()
+	params = {'oob_score': True, 'n_estimators': 7500, 'min_samples_split': 6, 'max_features': 10, 'criterion': 'gini', 'bootstrap': True}
+	classifier.set_params(**params)
+	classifier.fit(dataset, Y_train)
 
 	dataset_pd = pd.DataFrame(dataset, columns = ['min_T1', 'med_T1', 'mid_T1', 'mid_vsmall_ratio_T1', 'mid_small_ratio_T1', 'mid_med_ratio_T1', 'mid_large_ratio_T1', 'mid_vsmall_ratio_T1_inc', 'mid_small_ratio_T1_inc', 'mid_med_ratio_T1_inc', 'mid_large_ratio_T1_inc', 'mean_T1', 'max_T1', 'var_T1','range_T1', 'H_T1_e1', 'H_T1_e2', 'H_T1_e3', 'min_FLAIR', 'mid_FLAIR', 'med_FLAIR', 'mid_vsmall_ratio_FLAIR', 'mid_small_ratio_FLAIR', 'mid_med_ratio_FLAIR', 'mid_large_ratio_FLAIR', 'mid_vsmall_ratio_FLAIR_inc', 'mid_small_ratio_FLAIR_inc', 'mid_med_ratio_FLAIR_inc', 'mid_large_ratio_FLAIR_inc','mean_FLAIR', 'max_FLAIR', 'var_FLAIR','range_FLAIR','H_FLAIR_e1', 'H_FLAIR_e2', 'H_FLAIR_e3','density_diff', 'sum_soft_tiss_binary', 'sum_percent_soft_tiss', 'min_st', 'med_st', 'mid_st', 'mid_vsmall_ratio_st', 'mid_small_ratio_st','mid_med_ratio_st', 'mid_large_ratio_st', 'mid_vsmall_ratio_st_inc','mid_small_ratio_st_inc', 'mid_med_ratio_st_inc', 'mid_large_ratio_st_inc', 'mean_st', 'max_st', 'var_st','range_st','H_st_e1', 'H_st_e2', 'H_st_e3','min_stm', 'med_stm', 'mid_stm', 'mid_vsmall_ratio_stm', 'mid_small_ratio_stm','mid_med_ratio_stm', 'mid_large_ratio_stm', 'mid_vsmall_ratio_stm_inc','mid_small_ratio_stm_inc', 'mid_med_ratio_stm_inc', 'mid_large_ratio_stm_inc', 'mean_stm', 'max_stm','var_stm','range_stm', 'H_stm_e1', 'H_stm_e2', 'H_stm_e3','min_th_T1', 'med_th_T1', 'mid_th_T1', 'mid_vsmall_ratio_th_T1', 'mid_small_ratio_th_T1', 'mid_med_ratio_th_T1', 'mid_large_ratio_th_T1', 'mid_vsmall_ratio_th_T1_inc', 'mid_small_ratio_th_T1_inc', 'mid_med_ratio_th_T1_inc', 'mid_large_ratio_th_T1_inc', 'mean_th_T1', 'max_th_T1', 'var_th_T1','range_th_T1','H_th_T1_e1', 'H_th_T1_e2', 'H_th_T1_e3','min_th_FLAIR', 'med_th_FLAIR', 'mid_th_FLAIR', 'mid_vsmall_ratio_th_FLAIR', 'mid_small_ratio_th_FLAIR', 'mid_med_ratio_th_FLAIR', 'mid_large_ratio_th_FLAIR', 'mid_vsmall_ratio_th_FLAIR_inc', 'mid_small_ratio_th_FLAIR_inc', 'mid_med_ratio_th_FLAIR_inc', 'mid_large_ratio_th_FLAIR_inc', 'mean_th_FLAIR', 'max_th_FLAIR', 'var_th_FLAIR','range_th_FLAIR','H_th_FLAIR_e1', 'H_th_FLAIR_e2', 'H_th_FLAIR_e3','min_th_st', 'med_th_st', 'mid_th_st', 'mid_vsmall_ratio_th_st','mid_small_ratio_th_st', 'mid_med_ratio_th_st', 'mid_large_ratio_th_st', 'mid_vsmall_ratio_th_st_inc','mid_small_ratio_th_st_inc', 'mid_med_ratio_th_st_inc', 'mid_large_ratio_th_st_inc', 'mean_th_st', 'max_th_st','var_th_st','range_th_st', 'H_th_st_e1', 'H_th_st_e2', 'H_th_st_e3','min_bh_T1', 'med_bh_T1', 'mid_bh_T1', 'mid_vsmall_ratio_bh_T1','mid_small_ratio_bh_T1', 'mid_med_ratio_bh_T1', 'mid_large_ratio_bh_T1', 'mid_vsmall_ratio_bh_T1_inc','mid_small_ratio_bh_T1_inc', 'mid_med_ratio_bh_T1_inc', 'mid_large_ratio_bh_T1_inc', 'mean_bh_T1', 'max_bh_T1', 'var_bh_T1','range_bh_T1', 'H_bh_T1_e1', 'H_bh_T1_e2', 'H_bh_T1_e3','min_bh_FLAIR', 'med_bh_FLAIR', 'mid_bh_FLAIR', 'mid_vsmall_ratio_bh_FLAIR', 'mid_small_ratio_bh_FLAIR', 'mid_med_ratio_bh_FLAIR', 'mid_large_ratio_bh_FLAIR', 'mid_vsmall_ratio_bh_FLAIR_inc', 'mid_small_ratio_bh_FLAIR_inc', 'mid_med_ratio_bh_FLAIR_inc', 'mid_large_ratio_bh_FLAIR_inc', 'mean_bh_FLAIR', 'max_bh_FLAIR','var_bh_FLAIR','range_bh_FLAIR','H_bh_FLAIR_e1', 'H_bh_FLAIR_e2', 'H_bh_FLAIR_e3','min_bh_st', 'med_bh_st', 'mid_bh_st', 'mid_vsmall_ratio_bh_st','mid_small_ratio_bh_st', 'mid_med_ratio_bh_st', 'mid_large_ratio_bh_st', 'mid_vsmall_ratio_bh_st_inc','mid_small_ratio_bh_st_inc', 'mid_med_ratio_bh_st_inc', 'mid_large_ratio_bh_st_inc', 'mean_bh_st', 'max_bh_st', 'var_bh_st','range_bh_st', 'H_bh_st_e1', 'H_bh_st_e2', 'H_bh_st_e3', 'x', 'y', 'z', 'WMH_x', 'WMH_y' , 'WMH_z', 'CSF', 'GM', 'WM'])
 	
 	# Feature Importance Plot
-	result_importances, perm_sorted_idx = feature_importance_plot(classifier, dataset_pd, Y_train)
-	print("features plotted")
-	print(result_importances)
-	print(perm_sorted_idx)
+	#result_importances, perm_sorted_idx = feature_importance_plot(classifier, dataset_pd, Y_train)
+	#print("features plotted")
+	#print(result_importances)
+	#print(perm_sorted_idx)
 
-	perm_sorted_idx = ['z', 'x', 'y', 'var_th_T1', 'max_FLAIR', 'range_FLAIR', 'var_FLAIR', 'H_FLAIR_e1', 'sum_soft_tiss_binary', 'H_th_FLAIR_e1', 'min_th_FLAIR', 'mid_vsmall_ratio_stm_inc', 'mid_small_ratio_stm_inc', 'mid_med_ratio_stm_inc', 'mid_large_ratio_stm', 'mid_med_ratio_stm', 'WM', 'mid_stm', 'mid_small_ratio_stm', 'mid_vsmall_ratio_stm', 'mean_stm', 'med_stm', 'min_stm', 'H_st_e3', 'H_st_e2', 'H_st_e1', 'range_st', 'var_st', 'mid_large_ratio_stm_inc', 'range_stm']
+	#perm_sorted_idx = ['z', 'x', 'y', 'var_th_T1', 'max_FLAIR', 'range_FLAIR', 'var_FLAIR', 'H_FLAIR_e1', 'sum_soft_tiss_binary', 'H_th_FLAIR_e1', 'min_th_FLAIR', 'mid_vsmall_ratio_stm_inc', 'mid_small_ratio_stm_inc', 'mid_med_ratio_stm_inc', 'mid_large_ratio_stm', 'mid_med_ratio_stm', 'WM', 'mid_stm', 'mid_small_ratio_stm', 'mid_vsmall_ratio_stm', 'mean_stm', 'med_stm', 'min_stm', 'H_st_e3', 'H_st_e2', 'H_st_e1', 'range_st', 'var_st', 'mid_large_ratio_stm_inc', 'range_stm']
 
 	# Density Plot 
-	dataset_combined = dataset_pd.copy()
-	dataset_combined['Lacune'] = Y_train
-	density_plots(perm_sorted_idx, dataset_combined)
-	print("densities plotted")
+	#dataset_combined = dataset_pd.copy()
+	#dataset_combined['Lacune'] = Y_train
+	#density_plots(perm_sorted_idx, dataset_combined)
+	#print("densities plotted")
 
 	# Classifier predict
 	predictions = (classifier.predict_proba(dataset_test)[:,1] >= 0.4).astype(bool)
 	print(confusion_matrix(Y_test_filtered, predictions))
 
-	#mean_thresh = 0.4765
+	mean_thresh = 0.2168
 	predictions = (classifier.predict_proba(dataset_test)[:,1] >= mean_thresh).astype(bool)
 	print(confusion_matrix(Y_test_filtered, predictions))
 	np.save('/home/z5209394/Data/predictions.npy', predictions)
