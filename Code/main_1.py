@@ -219,7 +219,7 @@ def main():
 	#print("densities plotted")
 
 	# Classifier predict
-	predictions = (classifier.predict_proba(dataset_test)[:,1] >= 0.4).astype(bool)
+	predictions = (classifier.predict_proba(dataset_test)[:,1] >= 0.15).astype(bool)
 	print(confusion_matrix(Y_test_filtered, predictions))
 
 	mean_thresh = 0.2168
