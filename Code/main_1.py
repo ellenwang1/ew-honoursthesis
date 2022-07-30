@@ -118,7 +118,7 @@ def main():
 	# Best Number of Trees
 	accuracy_list = []
 	error_list = []
-	no_trees = [1, 50, 100, 200, 300, 500, 1000, 2000, 3000, 5000, 7500, 10000, 15000, 20000]
+	no_trees = [50, 100, 250, 500, 1000, 2500, 5000, 7500, 10000, 15000, 20000]
 	for i in no_trees:
 		print(i)
 		clf = RandomForestClassifier(n_estimators = i, criterion = 'gini', oob_score = True, bootstrap = True, n_jobs = 16)
