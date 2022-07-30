@@ -118,7 +118,7 @@ def main():
 	# Best Number of Trees
 	accuracy_list = []
 	error_list = []
-	no_trees = [50, 100, 250, 500, 1000, 2500, 5000, 7500, 10000, 15000, 20000]
+	no_trees = [250, 500, 1000, 2500, 5000, 7500, 10000, 15000, 20000, 30000, 50000]
 	for i in no_trees:
 		print(i)
 		clf = RandomForestClassifier(n_estimators = i, criterion = 'gini', oob_score = True, bootstrap = True, n_jobs = 16)
@@ -198,7 +198,7 @@ def main():
 
 	# Saved classifier
 	classifier = RandomForestClassifier()
-	params = {'oob_score': True, 'n_estimators': 7500, 'min_samples_split': 3, 'max_features': 10, 'criterion': 'gini', 'bootstrap': True}
+	params = {'oob_score': True, 'n_estimators': 7500, 'min_samples_split': 3, 'max_features': 10, 'criterion': 'gini', 'bootstrap': True, 'n_jobs': 16}
 	classifier.set_params(**params)
 	classifier.fit(dataset, Y_train)
 
