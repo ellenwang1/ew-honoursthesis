@@ -223,7 +223,7 @@ def main():
 
 	# Subset features
 	dataset_subset = dataset_pd[['x', 'y', 'z', 'var_th_T1', 'max_FLAIR', 'range_FLAIR', 'H_FLAIR_e1', 'sum_soft_tiss_binary', 'H_th_FLAIR_e1', 'min_th_FLAIR', 'mid_vsmall_ratio_stm_inc', 'mid_small_ratio_stm_inc', 'mid_med_ratio_stm_inc', 'mid_large_ratio_stm', 'mid_med_ratio_stm', 'WM', 'mid_stm', 'mid_small_ratio_stm', 'mid_vsmall_ratio_stm']]
-	dataset_test_subset = dataset_pd[['x_test', 'y_test', 'z_test', 'var_th_T1_test', 'max_FLAIR_test', 'range_FLAIR_test', 'H_FLAIR_e1_test', 'sum_soft_tiss_binary_test', 'H_th_FLAIR_e1_test', 'min_th_FLAIR_test', 'mid_vsmall_ratio_stm_inc_test', 'mid_small_ratio_stm_inc_test', 'mid_med_ratio_stm_inc_test', 'mid_large_ratio_stm_test', 'mid_med_ratio_stm_test', 'WM_test', 'mid_stm_test', 'mid_small_ratio_stm_test', 'mid_vsmall_ratio_stm_test']]
+	dataset_test_subset = dataset_test_pd[['x_test', 'y_test', 'z_test', 'var_th_T1_test', 'max_FLAIR_test', 'range_FLAIR_test', 'H_FLAIR_e1_test', 'sum_soft_tiss_binary_test', 'H_th_FLAIR_e1_test', 'min_th_FLAIR_test', 'mid_vsmall_ratio_stm_inc_test', 'mid_small_ratio_stm_inc_test', 'mid_med_ratio_stm_inc_test', 'mid_large_ratio_stm_test', 'mid_med_ratio_stm_test', 'WM_test', 'mid_stm_test', 'mid_small_ratio_stm_test', 'mid_vsmall_ratio_stm_test']]
 
 	classifier.fit(dataset_subset, Y_train)
 
