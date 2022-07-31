@@ -84,9 +84,9 @@ def density_plots(perm_sorted_idx, dataset_combined):
 		ax = sns.kdeplot(dataset_combined[feature][dataset_combined.Lacune == 1], color="darkturquoise", shade=True)
 		sns.kdeplot(dataset_combined[feature][dataset_combined.Lacune == 0], color="lightcoral", shade=True)
 		plt.legend(['Lacune', 'Non-Lacune'])
-		title = "Density Plot of " + feature + "for lacunes and non-lacunes"
+		title = "Density Plot of " + feature + " for lacunes and non-lacunes"
 		plt.title(title)
-		ax.set(xlabel='Intensity')
-		plt.xlim(0,1)
+		ax.set(xlabel='Unit Measurement of ' + feature)
+		ax.set(ylabel='Density')
 		plt.savefig('/home/z5209394/ew-honoursthesis/Graphs/' + feature + '.png')
 
