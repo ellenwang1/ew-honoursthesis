@@ -19,8 +19,8 @@ def plot_auc_roc_thresholds(classifier, dataset, Y_train, cv_splits, mean_thresh
 	tprs = []
 	aucs = []
 	mean_fpr = np.linspace(0, 1, 100)
-	thresholds = [0.15, 0.5]
-	thresholds.append(mean_thresh)
+	thresholds = [0.213214]
+	#thresholds.append(mean_thresh)
 
 	for thresh in thresholds:
 		fig, ax = plt.subplots()

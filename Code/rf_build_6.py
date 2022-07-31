@@ -69,9 +69,6 @@ def cv_folds(dataset_b, Y_train):
 	return cv_1_data, cv_2_data, cv_3_data, cv_4_data, cv_5_data, cv_1_idx, cv_2_idx, cv_3_idx, cv_4_idx, cv_5_idx, cv_1_brains, cv_2_brains, cv_3_brains, cv_4_brains, cv_5_brains, cv_1_train, cv_2_train, cv_3_train, cv_4_train, cv_5_train 
 
 def find_mean_thresh(classifier, cv_splits, dataset, Y_train):
-	tprs = []
-	aucs = []
-	mean_fpr = np.linspace(0, 1, 100)
 	threshold = []
 	# Get best thresholds
 	fig, ax = plt.subplots()
@@ -80,7 +77,6 @@ def find_mean_thresh(classifier, cv_splits, dataset, Y_train):
 		viz = plot_roc_curve(classifier, dataset[test], Y_train[test],
 							name='ROC fold {}'.format(i),
 							alpha=0.3, lw=1, ax=ax)
-		#y_pred_scores = (classifier.predict_proba(X_test)[:,1] >= 0.3).astype(bool) # set threshold as 0.3
 		y_pred_scores = classifier.predict_proba(dataset[test])
 		fpr, tpr, thresholds = roc_curve(Y_train[test], y_pred_scores[:, -1])
 		optimal_idx = np.argmax(tpr-fpr)
@@ -89,4 +85,4 @@ def find_mean_thresh(classifier, cv_splits, dataset, Y_train):
 		print("Threshold value is:", optimal_threshold)
 	
 	mean_thresh = np.mean(threshold)
-	return tprs, aucs, mean_thresh
+	return mean_thresh
