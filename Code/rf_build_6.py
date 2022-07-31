@@ -5,22 +5,6 @@ import numpy as np
 from sklearn.metrics import plot_roc_curve
 import matplotlib.pyplot as plt
 
-def best_number_of_trees(dataset, Y_train):
-	accuracy_list = []
-	error_list = []
-	no_trees = [50, 100, 200, 300, 500, 1000, 2000, 5000, 10000]
-	for i in no_trees:
-		from sklearn.ensemble import RandomForestClassifier
-		#max features, min sample split 
-		clf = RandomForestClassifier(n_estimators = i, max_features = 'sqrt', min_samples_split = 2, criterion = 'gini', oob_score = True, bootstrap = True, random_state = 30)
-		clf.fit(dataset, Y_train)
-		y_pred = (clf.oob_decision_function_[:,1] >= 0.50).astype(bool)
-		accuracy = accuracy_score(Y_train, y_pred)
-		accuracy_list.append(accuracy)
-	for i in accuracy_list:
-		error_list.append(1-i)
-	return accuracy_list, error_list
-
 def cv_folds(dataset_b, Y_train):
 
 	# Cv list
@@ -68,7 +52,7 @@ def cv_folds(dataset_b, Y_train):
 					cv_5_train.append(Y_train[i])
 	return cv_1_data, cv_2_data, cv_3_data, cv_4_data, cv_5_data, cv_1_idx, cv_2_idx, cv_3_idx, cv_4_idx, cv_5_idx, cv_1_brains, cv_2_brains, cv_3_brains, cv_4_brains, cv_5_brains, cv_1_train, cv_2_train, cv_3_train, cv_4_train, cv_5_train 
 
-def find_mean_thresh(classifier, cv_splits, dataset, Y_train, rf_random):
+def find_mean_thresh(classifier, cv_splits, dataset, Y_train):
 	tprs = []
 	aucs = []
 	mean_fpr = np.linspace(0, 1, 100)
