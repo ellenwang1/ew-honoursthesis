@@ -75,7 +75,29 @@ def feature_importance_plot(clf, dataset_pd, Y_train):
 	)
 	fig.tight_layout()
 	plt.savefig('/home/z5209394/ew-honoursthesis/Graphs/feature_importance.png')
-	return list(dataset_pd.columns[perm_sorted_idx][-40:]), list(result.importances[perm_sorted_idx][-40].T)
+	return list(dataset_pd.columns[perm_sorted_idx][-40:]), list(result.importances[perm_sorted_idx][-40])
+
+def least_important_feature_plot(clf, dataset_pd, Y_train):
+	# Feature Importance
+	result = permutation_importance(clf, dataset_pd, Y_train, n_repeats=10)
+	perm_sorted_idx = result.importances_mean.argsort()
+
+	tree_importance_sorted_idx = np.argsort(clf.feature_importances_)
+	tree_indices = np.arange(0, len(clf.feature_importances_)) + 0.5
+
+	fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 8))
+	ax1.barh(tree_indices[20:], clf.feature_importances_[tree_importance_sorted_idx][20:], height=0.7)
+	ax1.set_yticks(tree_indices[20:])
+	ax1.set_yticklabels(dataset_pd.columns[tree_importance_sorted_idx][20:])
+	ax2.boxplot(
+		result.importances[perm_sorted_idx][20:].T,
+		vert=False,
+		labels=dataset_pd.columns[perm_sorted_idx][20:],
+	)
+	fig.tight_layout()
+	plt.savefig('/home/z5209394/ew-honoursthesis/Graphs/n_feature_importance.png')
+	return list(dataset_pd.columns[perm_sorted_idx][20:]), list(result.importances[perm_sorted_idx][20])
+
 
 def density_plots(perm_sorted_idx, dataset_combined):
 	for variable in perm_sorted_idx:
