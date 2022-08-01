@@ -228,15 +228,15 @@ def main():
 	classifier.fit(dataset_subset, Y_train)
 
 	# Classifier predict
-	predictions = (classifier.predict_proba(dataset_test_pd)[:,1] >= 0.15).astype(bool)
+	predictions = (classifier.predict_proba(dataset_test_subset)[:,1] >= 0.15).astype(bool)
 	print(confusion_matrix(Y_test_filtered, predictions))
 
-	predictions = (classifier.predict_proba(dataset_test_pd)[:,1] >= mean_thresh).astype(bool)
+	predictions = (classifier.predict_proba(dataset_test_subset)[:,1] >= mean_thresh).astype(bool)
 	print(confusion_matrix(Y_test_filtered, predictions))
 	np.save('/home/z5209394/Data/predictions.npy', predictions)
 	np.save('/home/z5209394/Data/y_test_actual.npy', Y_test_filtered)
 	
-	predictions = (classifier.predict_proba(dataset_test_pd)[:,1] >= 0.5).astype(bool)
+	predictions = (classifier.predict_proba(dataset_test_subset)[:,1] >= 0.5).astype(bool)
 	print(confusion_matrix(Y_test_filtered, predictions))																																																																																																																																																																																																																																																																																																																															
 
 if __name__ == '__main__':
