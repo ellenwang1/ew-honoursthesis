@@ -189,7 +189,7 @@ def main():
 	params = {'oob_score': True, 'n_estimators': 15000, 'min_samples_split': 3, 'max_features': 10, 'criterion': 'gini', 'bootstrap': True, 'n_jobs': 16}
 	classifier.set_params(**params)
 	mean_thresh = 0.213214
-	#classifier.fit(dataset, Y_train)
+	classifier.fit(dataset, Y_train)
 
 	# Define cv splits to find best threshold
 	#cv_splits = [(np.concatenate([cv_2_idx, cv_3_idx, cv_4_idx, cv_5_idx]), cv_1_idx), 
@@ -236,7 +236,7 @@ def main():
 	variable_test_arr = []
 	for variable in variable_arr:
 		variable_test_arr.append(variable + '_test')
-		
+
 	dataset_test_subset = dataset_test_pd[variable_test_arr]
 	classifier.fit(dataset_subset, Y_train)
 
