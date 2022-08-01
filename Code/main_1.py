@@ -15,7 +15,7 @@ from import_data_3 import probability_tissue_maps, read_data
 from sample_4 import sample_lacunes, non_lacune_sampling, test_sampling, train_test_combine
 from feature_generation_5 import feature_gen_train, feature_gen_test
 from rf_build_6 import best_number_of_trees, cv_folds, find_mean_thresh
-from plots_8 import trees_plot, plot_auc_roc_thresholds, feature_importance_plot, density_plots, least_important_feature_plot
+from plots_8 import trees_plot, plot_auc_roc_thresholds, feature_importance_plot, density_plots
 
 def main():
 	print("here")
@@ -208,21 +208,18 @@ def main():
 	
 	# Feature Importance Plot
 	#result_importances, perm_sorted_idx = least_important_feature_plot(classifier, dataset_pd, Y_train)
-	result_importances, perm_sorted_idx = feature_importance_plot(classifier, dataset_pd, Y_train)
+	result_columns, perm_sorted_idx = feature_importance_plot(classifier, dataset_pd, Y_train)
 	print("features plotted")
-	print(result_importances)
 	
 	variable_arr = []
-	for i in range(len(result_importances)):
-		print(result_importances[i])
-		print(result_importances)
-		if sum(result_importances[i]) > 0:
+	for i in range(len(result_columns)):
+		print(result_columns[i])
+		print(perm_sorted_idx[i])
+		if sum(perm_sorted_idx[i]) > 0:
 			print("positive")
 			variable_arr.append(str(perm_sorted_idx[i]))
 
 	print(variable_arr)
-
-	#perm_sorted_idx = ['z', 'x', 'y', 'var_th_T1', 'max_FLAIR', 'range_FLAIR', 'var_FLAIR', 'H_FLAIR_e1', 'sum_soft_tiss_binary', 'H_th_FLAIR_e1', 'min_th_FLAIR', 'mid_vsmall_ratio_stm_inc', 'mid_small_ratio_stm_inc', 'mid_med_ratio_stm_inc', 'mid_large_ratio_stm', 'mid_med_ratio_stm', 'WM', 'mid_stm', 'mid_small_ratio_stm', 'mid_vsmall_ratio_stm', 'mean_stm', 'med_stm', 'min_stm', 'H_st_e3', 'H_st_e2', 'H_st_e1', 'range_st', 'var_st', 'mid_large_ratio_stm_inc', 'range_stm']
 
 	# Density Plot 
 	#dataset_combined = dataset_pd.copy()
