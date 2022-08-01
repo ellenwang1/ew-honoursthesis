@@ -58,7 +58,7 @@ def plot_auc_roc_thresholds(classifier, dataset, Y_train, cv_splits, mean_thresh
 
 def feature_importance_plot(clf, dataset_pd, Y_train):
 	# Feature Importance
-	result = permutation_importance(clf, dataset_pd, Y_train, n_repeats=1)
+	result = permutation_importance(clf, dataset_pd, Y_train, n_repeats=10)
 	perm_sorted_idx = result.importances_mean.argsort()
 
 	#tree_importance_sorted_idx = np.argsort(clf.feature_importances_)
