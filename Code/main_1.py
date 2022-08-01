@@ -211,8 +211,8 @@ def main():
 	np.save('/home/z5209394/Data/result_columns.npy', result_columns)
 	np.save('/home/z5209394/Data/perm_sorted_idx.npy', perm_sorted_idx)	
 	print("perm importance acquired")
-	indices = np.load('/home/z5209394/Data/result_columns.npy')
-	Y_test_filtered = np.load('/home/z5209394/Data/perm_sorted_idx.npy')
+	result_columns = np.load('/home/z5209394/Data/result_columns.npy')
+	perm_sorted_idx = np.load('/home/z5209394/Data/.npy')
 
 	
 	variable_arr = []
