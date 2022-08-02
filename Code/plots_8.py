@@ -4,6 +4,7 @@ from sklearn.metrics import auc
 from sklearn.metrics import plot_roc_curve
 from sklearn.inspection import permutation_importance
 import seaborn as sns
+import pandas as pd
 
 def trees_plot(error_list, no_trees):
 	index = np.arange(0,len(no_trees))
@@ -56,26 +57,89 @@ def plot_auc_roc_thresholds(classifier, dataset, Y_train, cv_splits, mean_thresh
 		ax.legend(loc="lower right")
 		plt.savefig('/home/z5209394/ew-honoursthesis/Graphs/roc-auc + '+ str(thresh) +' +.png')
 
-def feature_importance_plot(clf, dataset_pd, Y_train):
+def feature_importance_plot(clf, dataset_pd, Y_train, cv_splits):
 	# Feature Importance
-	result = permutation_importance(clf, dataset_pd, Y_train, n_repeats=10)
-	perm_sorted_idx = result.importances_mean.argsort()
+	importances_sorted_all = []
+	for i, (train, test) in enumerate(cv_splits):
+		importance_sorted = []
+		clf.fit(dataset_pd.iloc[train],Y_train[train])
+		importance_sorted_idx = np.argsort(clf.feature_importances_)
+		importance_sorted.append(dataset_pd.columns[importance_sorted_idx])
+		importance_sorted.append(clf.feature_importances_[importance_sorted_idx])
+		importances_sorted_all.append(importance_sorted)
 
-	#tree_importance_sorted_idx = np.argsort(clf.feature_importances_)
-	#tree_indices = np.arange(0, len(clf.feature_importances_)) + 0.5
+	perm_sorted_all = []
+	for i, (train, test) in enumerate(cv_splits):
+		perm_sorted = []
+		clf.fit(dataset_pd.iloc[train],Y_train[train])
+		result = permutation_importance(clf, dataset_pd.iloc[test], Y_train[test], n_repeats=10)
+		perm_sorted_idx = result.importances_mean.argsort()
+		perm_sorted.append(dataset_pd.columns[perm_sorted_idx])
+		perm_sorted.append(result.importances[perm_sorted_idx])
+		perm_sorted_all.append(perm_sorted)
 
-	#fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 8))
-	#ax1.barh(tree_indices[-30:], clf.feature_importances_[tree_importance_sorted_idx][-30:], height=0.7)
-	#ax1.set_yticks(tree_indices[-30:])
-	#ax1.set_yticklabels(dataset_pd.columns[tree_importance_sorted_idx][-30:])
-	#ax2.boxplot(
-	#	result.importances[perm_sorted_idx][-30:].T,
-	#	vert=False,
-	#	labels=dataset_pd.columns[perm_sorted_idx][-30:],
-	#)
-	#fig.tight_layout()
-	#plt.savefig('/home/z5209394/ew-honoursthesis/Graphs/feature_importance.png')
-	return list(dataset_pd.columns[perm_sorted_idx]), list(result.importances[perm_sorted_idx])
+	perm_dict = {}
+	for permutation in perm_sorted_all:
+		for i in range(len(permutation[0])):
+			if str(permutation[0][i]) not in perm_dict:
+				perm_dict[str(permutation[0][i])] = []
+				perm_dict[str(permutation[0][i])].append(permutation[1][i])
+			else:
+				perm_dict[str(permutation[0][i])].append(permutation[1][i])
+
+	importance_dict = {}
+	for importance in importances_sorted_all:
+		for i in range(len(importance[0])):
+			if str(importance[0][i]) not in importance_dict:
+				importance_dict[str(importance[0][i])] = []
+				importance_dict[str(importance[0][i])].append(importance[1][i])
+			else:
+				importance_dict[str(importance[0][i])].append(importance[1][i])
+
+	column_perm = []
+	perm_idx = []
+	perm_idx_average = []
+	for key, value in perm_dict.items():
+		column_perm.append(key)
+		perm_idx.append(value)
+		perm_idx_average.append(float(sum(value)/len(value)))
+		
+	column_importances = []
+	importances_idx = []
+	for key, value in importance_dict.items():
+		column_importances.append(key)
+		importances_idx.append(float(sum(value)/len(value)))
+
+	perm_idx_reshaped = []
+	for index in perm_idx:
+		reshaped = np.reshape(index, -1)
+		perm_idx_reshaped.append(reshaped)
+		
+	results_perm = pd.DataFrame()
+	results_perm['feature'] = column_perm
+	results_perm['perm_idx_average'] = perm_idx_average
+	results_perm['perm_idx_reshaped'] = perm_idx_reshaped
+	results_perm = results_perm.sort_values('perm_idx_average')
+
+	results_importance = pd.DataFrame()
+	results_importance['feature'] = column_importances
+	results_importance['importances_idx'] = importances_idx
+	results_importance = results_importance.sort_values('importances_idx')
+
+	tree_indices = np.arange(0, len(clf.feature_importances_)) + 0.5
+	fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 8))
+	ax1.barh(tree_indices[-40:], results_importance['importances_idx'][-40:], height=0.7)
+	ax1.set_yticks(tree_indices[-40:])
+	ax1.set_yticklabels(results_importance['feature'][-40:])
+	ax2.boxplot(
+		results_perm['perm_idx_reshaped'][-40:].to_numpy(),
+		vert=False,
+		labels=(results_perm['feature'][-40:]).to_numpy(),
+	)
+	fig.tight_layout()
+	plt.show()
+	plt.savefig('/home/z5209394/ew-honoursthesis/Graphs/feature_importance.png')
+	return results_perm['feature'], results_perm['perm_idx_average']
 
 
 def density_plots(perm_sorted_idx, dataset_combined):
