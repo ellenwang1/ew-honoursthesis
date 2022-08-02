@@ -70,6 +70,7 @@ def feature_importance_plot(clf, dataset_pd, Y_train, cv_splits):
 
 	perm_sorted_all = []
 	for i, (train, test) in enumerate(cv_splits):
+		print(i)
 		perm_sorted = []
 		clf.fit(dataset_pd.iloc[train],Y_train[train])
 		result = permutation_importance(clf, dataset_pd.iloc[test], Y_train[test], n_repeats=10)
