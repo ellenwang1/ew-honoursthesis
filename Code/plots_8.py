@@ -102,6 +102,7 @@ def feature_importance_plot(clf, dataset_pd, Y_train, cv_splits):
 	for key, value in perm_dict.items():
 		column_perm.append(key)
 		perm_idx.append(value)
+		value = np.reshape(value, -1)
 		perm_idx_average.append(float(sum(value)/len(value)))
 		
 	column_importances = []
