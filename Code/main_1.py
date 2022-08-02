@@ -133,7 +133,7 @@ def main():
 	print("no trees plotted")
 
 	# CV-Folds
-	#cv_1_data, cv_2_data, cv_3_data, cv_4_data, cv_5_data, cv_1_idx, cv_2_idx, cv_3_idx, cv_4_idx, cv_5_idx, cv_1_brains, cv_2_brains, cv_3_brains, cv_4_brains, cv_5_brains, cv_1_train, cv_2_train, cv_3_train, cv_4_train, cv_5_train = cv_folds(dataset_b, Y_train)																																																																																																																																						
+	cv_1_data, cv_2_data, cv_3_data, cv_4_data, cv_5_data, cv_1_idx, cv_2_idx, cv_3_idx, cv_4_idx, cv_5_idx, cv_1_brains, cv_2_brains, cv_3_brains, cv_4_brains, cv_5_brains, cv_1_train, cv_2_train, cv_3_train, cv_4_train, cv_5_train = cv_folds(dataset_b, Y_train)																																																																																																																																						
 
 	# Randomized Search CV 
 	# Number of trees in Random Forest
@@ -192,11 +192,11 @@ def main():
 	classifier.fit(dataset, Y_train)
 
 	# Define cv splits to find best threshold
-	#cv_splits = [(np.concatenate([cv_2_idx, cv_3_idx, cv_4_idx, cv_5_idx]), cv_1_idx), 
-	#		(np.concatenate([cv_1_idx, cv_3_idx, cv_4_idx, cv_5_idx]), cv_2_idx), 
-	#		(np.concatenate([cv_1_idx, cv_2_idx, cv_4_idx, cv_5_idx]), cv_3_idx), 
-	#		(np.concatenate([cv_1_idx, cv_2_idx, cv_3_idx, cv_5_idx]), cv_4_idx), 
-	#		(np.concatenate([cv_1_idx, cv_2_idx, cv_3_idx, cv_4_idx]), cv_5_idx)]
+	cv_splits = [(np.concatenate([cv_2_idx, cv_3_idx, cv_4_idx, cv_5_idx]), cv_1_idx), 
+			(np.concatenate([cv_1_idx, cv_3_idx, cv_4_idx, cv_5_idx]), cv_2_idx), 
+			(np.concatenate([cv_1_idx, cv_2_idx, cv_4_idx, cv_5_idx]), cv_3_idx), 
+			(np.concatenate([cv_1_idx, cv_2_idx, cv_3_idx, cv_5_idx]), cv_4_idx), 
+			(np.concatenate([cv_1_idx, cv_2_idx, cv_3_idx, cv_4_idx]), cv_5_idx)]
 
 	#mean_thresh = find_mean_thresh(classifier, cv_splits, dataset, Y_train)
 
@@ -207,23 +207,21 @@ def main():
 	dataset_test_pd = pd.DataFrame(dataset_test, columns = ['min_T1_test', 'med_T1_test', 'mid_T1_test', 'mid_vsmall_ratio_T1_test', 'mid_small_ratio_T1_test', 'mid_med_ratio_T1_test', 'mid_large_ratio_T1_test', 'mid_vsmall_ratio_T1_inc_test', 'mid_small_ratio_T1_inc_test', 'mid_med_ratio_T1_inc_test', 'mid_large_ratio_T1_inc_test', 'mean_T1_test', 'max_T1_test', 'var_T1_test','range_T1_test', 'H_T1_e1_test', 'H_T1_e2_test', 'H_T1_e3_test', 'min_FLAIR_test', 'mid_FLAIR_test', 'med_FLAIR_test', 'mid_vsmall_ratio_FLAIR_test', 'mid_small_ratio_FLAIR_test', 'mid_med_ratio_FLAIR_test', 'mid_large_ratio_FLAIR_test', 'mid_vsmall_ratio_FLAIR_inc_test', 'mid_small_ratio_FLAIR_inc_test', 'mid_med_ratio_FLAIR_inc_test', 'mid_large_ratio_FLAIR_inc_test','mean_FLAIR_test', 'max_FLAIR_test', 'var_FLAIR_test','range_FLAIR_test','H_FLAIR_e1_test', 'H_FLAIR_e2_test', 'H_FLAIR_e3_test','density_diff_test', 'sum_soft_tiss_binary_test', 'sum_percent_soft_tiss_test', 'min_st_test', 'med_st_test', 'mid_st_test', 'mid_vsmall_ratio_st_test', 'mid_small_ratio_st_test','mid_med_ratio_st_test', 'mid_large_ratio_st_test', 'mid_vsmall_ratio_st_inc_test','mid_small_ratio_st_inc_test', 'mid_med_ratio_st_inc_test', 'mid_large_ratio_st_inc_test', 'mean_st_test', 'max_st_test', 'var_st_test','range_st_test','H_st_e1_test', 'H_st_e2_test', 'H_st_e3_test','min_stm_test', 'med_stm_test', 'mid_stm_test', 'mid_vsmall_ratio_stm_test', 'mid_small_ratio_stm_test','mid_med_ratio_stm_test', 'mid_large_ratio_stm_test', 'mid_vsmall_ratio_stm_inc_test','mid_small_ratio_stm_inc_test', 'mid_med_ratio_stm_inc_test', 'mid_large_ratio_stm_inc_test', 'mean_stm_test', 'max_stm_test','var_stm_test','range_stm_test', 'H_stm_e1_test', 'H_stm_e2_test', 'H_stm_e3_test','min_th_T1_test', 'med_th_T1_test', 'mid_th_T1_test', 'mid_vsmall_ratio_th_T1_test', 'mid_small_ratio_th_T1_test', 'mid_med_ratio_th_T1_test', 'mid_large_ratio_th_T1_test', 'mid_vsmall_ratio_th_T1_inc_test', 'mid_small_ratio_th_T1_inc_test', 'mid_med_ratio_th_T1_inc_test', 'mid_large_ratio_th_T1_inc_test', 'mean_th_T1_test', 'max_th_T1_test', 'var_th_T1_test','range_th_T1_test','H_th_T1_e1_test', 'H_th_T1_e2_test', 'H_th_T1_e3_test','min_th_FLAIR_test', 'med_th_FLAIR_test', 'mid_th_FLAIR_test', 'mid_vsmall_ratio_th_FLAIR_test', 'mid_small_ratio_th_FLAIR_test', 'mid_med_ratio_th_FLAIR_test', 'mid_large_ratio_th_FLAIR_test', 'mid_vsmall_ratio_th_FLAIR_inc_test', 'mid_small_ratio_th_FLAIR_inc_test', 'mid_med_ratio_th_FLAIR_inc_test', 'mid_large_ratio_th_FLAIR_inc_test', 'mean_th_FLAIR_test', 'max_th_FLAIR_test', 'var_th_FLAIR_test','range_th_FLAIR_test','H_th_FLAIR_e1_test', 'H_th_FLAIR_e2_test', 'H_th_FLAIR_e3_test','min_th_st_test', 'med_th_st_test', 'mid_th_st_test', 'mid_vsmall_ratio_th_st_test','mid_small_ratio_th_st_test', 'mid_med_ratio_th_st_test', 'mid_large_ratio_th_st_test', 'mid_vsmall_ratio_th_st_inc_test','mid_small_ratio_th_st_inc_test', 'mid_med_ratio_th_st_inc_test', 'mid_large_ratio_th_st_inc_test', 'mean_th_st_test', 'max_th_st_test','var_th_st_test','range_th_st_test', 'H_th_st_e1_test', 'H_th_st_e2_test', 'H_th_st_e3_test','min_bh_T1_test', 'med_bh_T1_test', 'mid_bh_T1_test', 'mid_vsmall_ratio_bh_T1_test','mid_small_ratio_bh_T1_test', 'mid_med_ratio_bh_T1_test', 'mid_large_ratio_bh_T1_test', 'mid_vsmall_ratio_bh_T1_inc_test','mid_small_ratio_bh_T1_inc_test', 'mid_med_ratio_bh_T1_inc_test', 'mid_large_ratio_bh_T1_inc_test', 'mean_bh_T1_test', 'max_bh_T1_test', 'var_bh_T1_test','range_bh_T1_test', 'H_bh_T1_e1_test', 'H_bh_T1_e2_test', 'H_bh_T1_e3_test','min_bh_FLAIR_test', 'med_bh_FLAIR_test', 'mid_bh_FLAIR_test', 'mid_vsmall_ratio_bh_FLAIR_test', 'mid_small_ratio_bh_FLAIR_test', 'mid_med_ratio_bh_FLAIR_test', 'mid_large_ratio_bh_FLAIR_test', 'mid_vsmall_ratio_bh_FLAIR_inc_test', 'mid_small_ratio_bh_FLAIR_inc_test', 'mid_med_ratio_bh_FLAIR_inc_test', 'mid_large_ratio_bh_FLAIR_inc_test', 'mean_bh_FLAIR_test', 'max_bh_FLAIR_test','var_bh_FLAIR_test','range_bh_FLAIR_test','H_bh_FLAIR_e1_test', 'H_bh_FLAIR_e2_test', 'H_bh_FLAIR_e3_test','min_bh_st_test', 'med_bh_st_test', 'mid_bh_st_test', 'mid_vsmall_ratio_bh_st_test','mid_small_ratio_bh_st_test', 'mid_med_ratio_bh_st_test', 'mid_large_ratio_bh_st_test', 'mid_vsmall_ratio_bh_st_inc_test','mid_small_ratio_bh_st_inc_test', 'mid_med_ratio_bh_st_inc_test', 'mid_large_ratio_bh_st_inc_test', 'mean_bh_st_test', 'max_bh_st_test', 'var_bh_st_test','range_bh_st_test', 'H_bh_st_e1_test', 'H_bh_st_e2_test', 'H_bh_st_e3_test', 'x_test', 'y_test', 'z_test', 'WMH_x_test', 'WMH_y_test' , 'WMH_z_test', 'CSF_test', 'GM_test', 'WM_test'])
 	
 	# Feature Importance Plot
-	result_columns, perm_sorted_idx = feature_importance_plot(classifier, dataset_pd, Y_train)
-	#np.save('/home/z5209394/Data/result_columns.npy', result_columns)
-	#np.save('/home/z5209394/Data/perm_sorted_idx.npy', perm_sorted_idx)	
+	result_columns, perm_sorted_idx = feature_importance_plot(classifier, dataset_pd, Y_train, cv_splits)
+	result_columns.to_numpy()
+	perm_sorted_idx.to_numpy()
+	np.save('/home/z5209394/Data/result_columns.npy', result_columns)
+	np.save('/home/z5209394/Data/perm_sorted_idx.npy', perm_sorted_idx)
 	print("perm importance acquired")
-	#result_columns = np.load('/home/z5209394/Data/result_columns.npy')
-	#perm_sorted_idx = np.load('/home/z5209394/Data/perm_sorted_idx.npy')
+	#perm_idx_dataframe = np.load('/home/z5209394/Data/perm_idx_dataframe.npy')
 
 	
 	variable_arr = []
 	for i in range(len(result_columns)):
-		print(result_columns[i])
-		print(perm_sorted_idx[i])
-		if sum(perm_sorted_idx[i]) > 0:
-			print("positive")
+		if (perm_sorted_idx[i]) > 0:
 			variable_arr.append(str(result_columns[i]))
-
 	print(variable_arr)
+	len(variable_arr)
 
 	# Density Plot 
 	#dataset_combined = dataset_pd.copy()
