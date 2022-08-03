@@ -223,15 +223,6 @@ def main():
 	#len(variable_arr)
 
 	variable_arr = [
-       'mid_small_ratio_th_FLAIR_inc', 'mid_bh_T1',
-       'mid_small_ratio_th_T1', 'mid_small_ratio_th_T1_inc', 'H_th_T1_e3',
-       'H_th_T1_e2', 'H_th_st_e3', 'H_th_T1_e1', 'H_th_st_e2',
-       'mid_med_ratio_th_T1', 'H_bh_T1_e1', 'mid_th_st',
-       'mid_med_ratio_th_FLAIR_inc', 'mid_med_ratio_th_FLAIR',
-       'H_th_st_e1', 'mid_large_ratio_bh_st_inc',
-       'mid_med_ratio_th_st_inc', 'H_th_FLAIR_e3', 'H_st_e3', 'H_st_e2',
-       'mid_small_ratio_th_FLAIR', 'mid_large_ratio_bh_FLAIR_inc',
-       'mid_med_ratio_th_st', 'mid_small_ratio_th_st',
        'mid_large_ratio_th_T1_inc', 'mid_st', 'mid_th_FLAIR',
        'H_th_FLAIR_e2', 'mid_med_ratio_bh_FLAIR', 'H_st_e1',
        'mid_large_ratio_bh_FLAIR', 'mid_vsmall_ratio_th_st',
