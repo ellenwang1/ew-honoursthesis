@@ -150,7 +150,6 @@ def main():
 		'n_estimators': [n_estimators],
 		'bootstrap': [True],
 		'max_samples': [21600],
-		'random_state': [42],
 		'oob_score': [True],
 		'max_features': rf_max_features,
 		'min_samples_split': rf_min_samples_split}
