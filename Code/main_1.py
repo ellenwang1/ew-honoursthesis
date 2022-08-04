@@ -186,7 +186,7 @@ def main():
 
 	# Saved classifier
 	classifier = RandomForestClassifier()
-	params = {'oob_score': True, 'n_estimators': 15000, 'min_samples_split': 3, 'max_features': 10, 'criterion': 'gini', 'bootstrap': True, 'max_samples': 48700, 'n_jobs': 16}
+	params = {'oob_score': True, 'n_estimators': 15000, 'min_samples_split': 3, 'max_features': 10, 'criterion': 'gini', 'bootstrap': True, 'max_samples': 21600, 'n_jobs': 16}
 	classifier.set_params(**params)
 	mean_thresh = 0.213214
 	classifier.fit(dataset, Y_train)
