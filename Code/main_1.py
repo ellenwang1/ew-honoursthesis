@@ -121,7 +121,7 @@ def main():
 	no_trees = [250, 500, 1000, 2500, 5000, 10000, 15000, 20000, 25000, 50000]
 	for i in no_trees:
 		print(i)
-		clf = RandomForestClassifier(n_estimators = i, criterion = 'gini', oob_score = True, bootstrap = True, max_samples = 21600, n_jobs = 16)
+		clf = RandomForestClassifier(n_estimators = i, criterion = 'gini', oob_score = True, max_features = 'sqrt', min_samples_split = 2, bootstrap = True, max_samples = 21600, n_jobs = 16)
 		clf.fit(dataset, Y_train)
 		y_pred = (clf.oob_decision_function_[:,1] >= 0.50).astype(bool)
 		accuracy = metrics.accuracy_score(Y_train, y_pred)
