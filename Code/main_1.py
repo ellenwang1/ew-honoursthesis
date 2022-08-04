@@ -116,20 +116,20 @@ def main():
 	dataset_test = dataset_test_b[:,1:]		
 
 	# Best Number of Trees
-	accuracy_list = []
-	error_list = []
-	no_trees = [250, 500, 1000, 2500, 5000, 10000, 15000, 20000, 25000, 50000]
-	for i in no_trees:
-		print(i)
-		clf = RandomForestClassifier(n_estimators = i, criterion = 'gini', oob_score = True, bootstrap = True, max_samples = 21600, n_jobs = 16, random_state = 42)
-		clf.fit(dataset, Y_train)
-		y_pred = (clf.oob_decision_function_[:,1] >= 0.50).astype(bool)
-		accuracy = metrics.accuracy_score(Y_train, y_pred)
-		accuracy_list.append(accuracy)
-		error_list.append(1-accuracy)
+	#accuracy_list = []
+	#error_list = []
+	#no_trees = [250, 500, 1000, 2500, 5000, 10000, 15000, 20000, 25000, 50000]
+	#for i in no_trees:
+	#	print(i)
+	#	clf = RandomForestClassifier(n_estimators = i, criterion = 'gini', oob_score = True, bootstrap = True, max_samples = 21600, n_jobs = 16, random_state = 42)
+	#	clf.fit(dataset, Y_train)
+	#	y_pred = (clf.oob_decision_function_[:,1] >= 0.50).astype(bool)
+	#	accuracy = metrics.accuracy_score(Y_train, y_pred)
+	#	accuracy_list.append(accuracy)
+	#	error_list.append(1-accuracy)
 
 	# Generate plot
-	trees_plot(error_list, no_trees)
+	#trees_plot(error_list, no_trees)
 	print("no trees plotted")
 
 	# CV-Folds
@@ -149,8 +149,8 @@ def main():
 	rf_grid = {'criterion' : ["gini"],
 		'n_estimators': [n_estimators],
 		'bootstrap': [True],
-		'max_samples': 21600,
-		'random_state': 42,
+		'max_samples': [21600],
+		'random_state': [42],
 		'oob_score': [True],
 		'max_features': rf_max_features,
 		'min_samples_split': rf_min_samples_split}
