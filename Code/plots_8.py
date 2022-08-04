@@ -8,11 +8,11 @@ import pandas as pd
 
 def trees_plot(error_list, no_trees):
 	index = np.arange(0,len(no_trees))
-	plt.plot(index, error_list, label = "accuracy", linestyle="--")
+	plt.plot(index, error_list, label = "OOB Error", linestyle="--")
 	plt.xlabel('No. of Trees')
-	plt.ylabel('OOB_Error')
+	plt.ylabel('OOB Error')
 	plt.xticks(index, no_trees)
-	plt.title('Performance of Random Forest on different number of trees')
+	plt.title('Performance of random forest on different number of trees')
 	plt.legend()
 	plt.savefig('/home/z5209394/ew-honoursthesis/Graphs/no_trees.png')
 
