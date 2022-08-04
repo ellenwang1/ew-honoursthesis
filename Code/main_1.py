@@ -149,7 +149,7 @@ def main():
 	rf_grid = {'criterion' : ["gini"],
 		'n_estimators': [n_estimators],
 		'bootstrap': [True],
-		'max_samples': [21600],
+		'max_samples': [0.63],
 		'oob_score': [True],
 		'max_features': rf_max_features,
 		'min_samples_split': rf_min_samples_split}
