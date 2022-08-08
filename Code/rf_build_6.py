@@ -10,8 +10,7 @@ def best_number_of_trees(dataset, Y_train):
 	error_list = []
 	no_trees = [50, 100, 200, 300, 500, 1000, 2000, 5000, 10000]
 	for i in no_trees:
-		from sklearn.ensemble import RandomForestClassifier
-		#max features, min sample split 
+		# Set max features and minimum samples split to default value
 		clf = RandomForestClassifier(n_estimators = i, max_features = 'sqrt', min_samples_split = 2, criterion = 'gini', oob_score = True, bootstrap = True, random_state = 30)
 		clf.fit(dataset, Y_train)
 		y_pred = (clf.oob_decision_function_[:,1] >= 0.50).astype(bool)
@@ -22,8 +21,7 @@ def best_number_of_trees(dataset, Y_train):
 	return accuracy_list, error_list
 
 def cv_folds(dataset_b, Y_train):
-
-	# Cv list
+	# Divide data into CV folds
 	cv_1_data = []
 	cv_2_data = []
 	cv_3_data = []

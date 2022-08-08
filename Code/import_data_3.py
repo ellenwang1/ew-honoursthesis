@@ -3,12 +3,14 @@ import numpy as np
 import os
 import re
 
+# Read all probability tissue maps
 def probability_tissue_maps(tissue_maps):
     CSF = []
     WM = []
     GM = []
     for file in os.listdir(tissue_maps):
         if file.endswith(".nii"):
+            # For CSF
             if file.find("CSF"):
                 Data_list = []
                 file_id = int(re.search(r'\d+', file)[0])
@@ -18,6 +20,7 @@ def probability_tissue_maps(tissue_maps):
                 Data_list.append(file_id)
                 Data_list.append(data)
                 CSF.append(Data_list)
+            # For grey matter
             if file.find("GM"):
                 Data_list = []
                 file_id = int(re.search(r'\d+', file)[0])
@@ -28,6 +31,7 @@ def probability_tissue_maps(tissue_maps):
                 Data_list.append(data)
                 print(np.mean(data))
                 GM.append(Data_list)
+            # For white matter
             if file.find("WM"):
                 Data_list = []
                 file_id = int(re.search(r'\d+', file)[0])
@@ -40,8 +44,9 @@ def probability_tissue_maps(tissue_maps):
                 WM.append(Data_list)
     return CSF, WM, GM
 
+# Read lacune data
 def read_data(T1_scan, FLAIR_scan, T1_Lacunes_Correct, T1_Soft_Tissue):
-    #Read all data into list
+    # Read all T1-weighted data into list
     T1_scan_data = []
     for file in os.listdir(T1_scan):
         if file.endswith(".nii.gz"):
@@ -54,7 +59,7 @@ def read_data(T1_scan, FLAIR_scan, T1_Lacunes_Correct, T1_Soft_Tissue):
             Data_list.append(data)
             T1_scan_data.append(Data_list)
 
-    #Read all FLAIR data into list
+    # Read all FLAIR data into list
     FLAIR_scan_data = []
     for file in os.listdir(FLAIR_scan):
         if file.endswith(".nii.gz"):
@@ -67,7 +72,7 @@ def read_data(T1_scan, FLAIR_scan, T1_Lacunes_Correct, T1_Soft_Tissue):
             Data_list.append(data)
             FLAIR_scan_data.append(Data_list)
 
-    #Lacune Exists
+    # Read lacune binary mask into list
     Lacune_indicator_data = []
     for file in os.listdir(T1_Lacunes_Correct):
         if file.endswith(".nii.gz"):
@@ -80,6 +85,7 @@ def read_data(T1_scan, FLAIR_scan, T1_Lacunes_Correct, T1_Soft_Tissue):
             Data_list.append(data)
             Lacune_indicator_data.append(Data_list)
 
+    # Read soft tissue data into list
     Soft_tiss_data = []
     for file in os.listdir(T1_Soft_Tissue):
         if file.endswith(".nii.gz"):
