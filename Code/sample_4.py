@@ -4,7 +4,6 @@ import os
 import numpy as np
 
 def sample_lacunes(CSF, GM, WM, T1_Soft_Tissue_Binary_Mask, T1_scan_data, FLAIR_scan_data, Lacune_indicator_data, Soft_tiss_data):
-	# Lacune not as centred, random sampling all around brain
 	X_train_3D_lacune = []
 	Y_train_3D_lacune = []
 	Y_train_segment_3D_lacune = []
@@ -32,14 +31,15 @@ def sample_lacunes(CSF, GM, WM, T1_Soft_Tissue_Binary_Mask, T1_scan_data, FLAIR_
 			for x in range(0, data.shape[0]):
 				for y in range(0, data.shape[1]):
 					for z in range(0, 180):
-						#filter for soft tissue
+						# Remove external areas to the brain
 						if (x < 50) | (y < 70) | (z < 15) | (x > 200) | (y > 210) | (z > 165) | (T1_data_scans[x,y,z] == 0) | (FLAIR_data_scans[x,y,z] == 0):
 							next
 						else:
-					
 							if brain_image <= 24:
+								# Take lacune voxels that are not on the edge
 								if (Lacune_data[x,y,z] == 1) & (sum(sum(sum(Lacune_data[x-1:x+1, y-1:y+1, z-1:z+1]))) >= 4):
 									
+									# List for each of lacune, it's non-lacune version about the horizontal axis, and 9 rotations.
 									brain_values = []
 									brain_values_nlacune = []
 									brain_values_rot90x = []
@@ -253,7 +253,6 @@ def sample_lacunes(CSF, GM, WM, T1_Soft_Tissue_Binary_Mask, T1_scan_data, FLAIR_
 	return X_train_3D_lacune, Y_train_3D_lacune, Y_train_segment_3D_lacune, X_train_3D_nlacune, Y_train_3D_nlacune, Y_train_segment_3D_nlacune
 
 def non_lacune_sampling(CSF, GM, WM, T1_Soft_Tissue_Binary_Mask, T1_scan_data, FLAIR_scan_data, Lacune_indicator_data, Soft_tiss_data):
-	# Lacune not as centred, random sampling all around brain
 	X_train_3D_nlacune_func2 = []
 	Y_train_3D_nlacune_func2 = []
 	Y_train_segment_3D_nlacune_func2 = []
@@ -274,12 +273,12 @@ def non_lacune_sampling(CSF, GM, WM, T1_Soft_Tissue_Binary_Mask, T1_scan_data, F
 			GM_data = GM[brain_image][1]
 			WM_data = WM[brain_image][1]
 			
-			#Sample lacunes
+			# Drawing random samples from x,y,z coordinates
 			sampled_list_x = np.random.choice(data.shape[0], 2500)
 			sampled_list_y = np.random.choice(data.shape[1], 2500)
 			sampled_list_z = np.random.choice(180, 2500)
 			for x,y,z in set(list(zip(sampled_list_x, sampled_list_y,sampled_list_z))):
-				#filter for soft tissue
+				# Remove external areas of the brain
 				if (x < 50) | (y < 70) | (z < 15) | (x > 200) | (y > 210) | (z > 165) |  (T1_data_scans[x,y,z] == 0) | (FLAIR_data_scans[x,y,z] == 0):
 					next
 				else:
@@ -313,10 +312,11 @@ def non_lacune_sampling(CSF, GM, WM, T1_Soft_Tissue_Binary_Mask, T1_scan_data, F
 					lacune_binary = Lacune_data[x-10:x+10, y-10:y+10, z-10:z+10]
 
 					if brain_image <= 24:
-						# No lacune exists in the 3D patch, add to train set
+						# Ignore samples that contain lacune voxels
 						if any(1 in sublist for sublist in lacune_binary):
 							next
 						else:
+						# If no lacunes, add to no lacune sample
 							X_train_3D_nlacune_func2.append(brain_values)
 							Y_train_3D_nlacune_func2.append(0)
 							Y_train_segment_3D_nlacune_func2.append(lacune_binary)
@@ -327,7 +327,6 @@ def non_lacune_sampling(CSF, GM, WM, T1_Soft_Tissue_Binary_Mask, T1_scan_data, F
 	return X_train_3D_nlacune_func2, Y_train_3D_nlacune_func2, Y_train_segment_3D_nlacune_func2
 
 def test_sampling(CSF, GM, WM, T1_Soft_Tissue_Binary_Mask, T1_scan_data, FLAIR_scan_data, Lacune_indicator_data, Soft_tiss_data):
-	# Lacune not as centred, random sampling all around brain
 	X_test_3D_nlacune = []
 	Y_test_3D_nlacune = []
 	Y_test_segment_3D_nlacune = []
@@ -350,19 +349,18 @@ def test_sampling(CSF, GM, WM, T1_Soft_Tissue_Binary_Mask, T1_scan_data, FLAIR_s
 			GM_data = GM[brain_image][1]
 			WM_data = WM[brain_image][1]
 			
-			#Sample lacunes
-			#Sample lacunes
-			sampled_list_x = np.random.choice(data.shape[0], 30000)
-			sampled_list_y = np.random.choice(data.shape[1], 30000)
-			sampled_list_z = np.random.choice(180, 30000)
+			#Samples of test set
+			sampled_list_x = np.random.choice(data.shape[0], 60000)
+			sampled_list_y = np.random.choice(data.shape[1], 60000)
+			sampled_list_z = np.random.choice(180, 60000)
 			for x,y,z in set(list(zip(sampled_list_x, sampled_list_y,sampled_list_z))):
-				#filter for soft tissue
+				# Avoiding areas in the brain sample with no lacunes
 				if (x < 50) | (y < 70) | (z < 15) | (x > 200) | (y > 210) | (z > 165) | (T1_data_scans[x,y,z] == 0) | (FLAIR_data_scans[x,y,z] == 0):
 					next
 				else:
 					if brain_image <= 24:
 						next
-
+					# Only sampling from the last 10 brains
 					else:
 						brain_values = []
 						brain_values.append(file_id)
@@ -392,9 +390,9 @@ def test_sampling(CSF, GM, WM, T1_Soft_Tissue_Binary_Mask, T1_scan_data, FLAIR_s
 						brain_values.append(patch_3D_GM)
 
 						lacune_binary = Lacune_data[x-10:x+10, y-10:y+10, z-10:z+10]
-						lacune_inner = Lacune_data[x-1:x+1, y-1:y+1, z-1:z+1]
-						if any(1 in sublist for sublist in lacune_inner):
-							print(lacune_inner)
+
+						# Definition of a lacune sample
+						if Lacune_data[x,y,z] == 1:
 							X_test_3D_lacune.append(brain_values)
 							Y_test_3D_lacune.append(1)
 							Y_test_segment_3D_lacune.append(lacune_binary)
@@ -407,6 +405,7 @@ def test_sampling(CSF, GM, WM, T1_Soft_Tissue_Binary_Mask, T1_scan_data, FLAIR_s
 
 	return X_test_3D_lacune, Y_test_3D_lacune, Y_test_segment_3D_lacune, X_test_3D_nlacune, Y_test_3D_nlacune, Y_test_segment_3D_nlacune
 
+# Combining the samples drawin into train and test
 def train_test_combine(X_train_3D_lacune, Y_train_3D_lacune, Y_train_segment_3D_lacune, X_train_3D_nlacune, Y_train_3D_nlacune, Y_train_segment_3D_nlacune, X_train_3D_nlacune_func2, Y_train_3D_nlacune_func2, Y_train_segment_3D_nlacune_func2, X_test_3D_lacune, Y_test_3D_lacune, Y_test_segment_3D_lacune, X_test_3D_nlacune, Y_test_3D_nlacune, Y_test_segment_3D_nlacune):
 	X_train_3D_nlacune_all = np.concatenate((X_train_3D_nlacune, X_train_3D_nlacune_func2), axis=0)
 	Y_train_3D_nlacune_all = np.concatenate((Y_train_3D_nlacune, Y_train_3D_nlacune_func2), axis=0)
@@ -414,7 +413,6 @@ def train_test_combine(X_train_3D_lacune, Y_train_3D_lacune, Y_train_segment_3D_
 	X_train = np.concatenate((X_train_3D_lacune, X_train_3D_nlacune_all), axis=0)
 	Y_train = np.concatenate((Y_train_3D_lacune, Y_train_3D_nlacune_all), axis=0)
 	Y_train_segment = np.concatenate((Y_train_segment_3D_lacune, Y_train_segment_3D_nlacune_all), axis=0)
-	print(len(Y_test_segment_3D_lacune), len(Y_test_segment_3D_nlacune))
 	Y_test_segment = np.concatenate((Y_test_segment_3D_lacune, Y_test_segment_3D_nlacune), axis=0)
 	Y_test = np.concatenate((Y_test_3D_lacune, Y_test_3D_nlacune), axis=0)
 	X_test = np.concatenate((X_test_3D_lacune, X_test_3D_nlacune), axis=0)
