@@ -1,5 +1,5 @@
 Name: Ellen Wang <br />
-Email: z5209394@student.unsw.edu <br />
+Email: z5209394@student.unsw.edu.au <br />
 
 Files in this repository: <br />
 1. main_1.py: wrapper for all functions. <br />
